@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cẩm nang toàn năng - MẫnKaka</title>
-
+    
+    <!-- Font Awesome 6 (biểu tượng đẹp) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -17,13 +18,27 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="container">
-            <div class="logo">
-                <span class="logo-icon">🧠</span>
-                <h1>Cẩm nang toàn năng</h1>
-                <span class="badge">MẫnKaka</span>
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Cẩm nang toàn năng</h1>
+                        <span class="badge">MẫnKaka</span>
+                    </div>
+                </div>
+                <div class="header-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
             </div>
-            <p class="subtitle">📌 Tổng hợp công cụ · AI · Website hữu ích</p>
+            <p class="subtitle">
+                <i class="fas fa-rocket"></i> Tổng hợp công cụ · AI · Website hữu ích
+            </p>
 
+            <!-- ===== WELCOME SECTION ===== -->
             <div class="welcome-section">
                 <div class="welcome-text" id="welcomeText">
                     <span class="typing-cursor"></span>
@@ -35,13 +50,27 @@
     <!-- ===== TABS ===== -->
     <nav class="tabs-nav">
         <div class="container">
-            <button class="tab-btn active" data-tab="tool">🛠️ Công cụ</button>
-            <button class="tab-btn" data-tab="ai">🤖 AI Phổ thông</button>
-            <button class="tab-btn" data-tab="ai-utility">🛠️ AI Tiện ích</button>
-            <button class="tab-btn" data-tab="search">📡 Tra cứu</button>
-            <button class="tab-btn" data-tab="utility">⚡ Tiện ích</button>
-            <button class="tab-btn" data-tab="calculator">🧮 Tính toán</button>
-            <button class="tab-btn" data-tab="route">📍 Lộ trình</button>
+            <button class="tab-btn active" data-tab="tool">
+                <i class="fas fa-tools"></i> Công cụ
+            </button>
+            <button class="tab-btn" data-tab="ai">
+                <i class="fas fa-robot"></i> AI Phổ thông
+            </button>
+            <button class="tab-btn" data-tab="ai-utility">
+                <i class="fas fa-wand-magic-sparkles"></i> AI Tiện ích
+            </button>
+            <button class="tab-btn" data-tab="search">
+                <i class="fas fa-search-location"></i> Tra cứu
+            </button>
+            <button class="tab-btn" data-tab="utility">
+                <i class="fas fa-bolt"></i> Tiện ích
+            </button>
+            <button class="tab-btn" data-tab="calculator">
+                <i class="fas fa-calculator"></i> Tính toán
+            </button>
+            <button class="tab-btn" data-tab="route">
+                <i class="fas fa-route"></i> Lộ trình
+            </button>
         </div>
     </nav>
 
@@ -53,11 +82,21 @@
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
-            <p>© 2026 <strong>Cẩm nang toàn năng</strong> · MẫnKaka</p>
-            <p class="footer-small">📌 Click vào thẻ để mở link trong tab mới</p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-compass"></i>
+                    <span><strong>Cẩm nang toàn năng</strong></span>
+                </div>
+                <p>© 2026 · MẫnKaka</p>
+                <p class="footer-small">
+                    <i class="fas fa-external-link-alt"></i> Click vào thẻ để mở link trong tab mới
+                </p>
+            </div>
         </div>
     </footer>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
