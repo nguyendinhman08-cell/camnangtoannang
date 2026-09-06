@@ -6,7 +6,6 @@
 // DỮ LIỆU CÁC DANH MỤC
 // ============================================================
 const categories = {
-    // ===== CÔNG CỤ =====
     tool: {
         icon: '🛠️',
         name: 'Công cụ',
@@ -16,8 +15,6 @@ const categories = {
             { icon: '🔄', title: 'Convertio', url: 'https://convertio.co/vn/' }
         ]
     },
-
-    // ===== AI PHỔ THÔNG =====
     ai: {
         icon: '🤖',
         name: 'AI Phổ thông',
@@ -27,8 +24,6 @@ const categories = {
             { icon: '📓', title: 'NotebookLM', url: 'https://notebook.google.com/' }
         ]
     },
-
-    // ===== AI TIỆN ÍCH =====
     'ai-utility': {
         icon: '🛠️',
         name: 'AI Tiện ích',
@@ -39,8 +34,6 @@ const categories = {
             { icon: '✍️', title: 'Trợ lý Viết Bài MXH', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo' }
         ]
     },
-
-    // ===== TRA CỨU =====
     search: {
         icon: '📡',
         name: 'Tra cứu',
@@ -52,8 +45,6 @@ const categories = {
             { icon: '📶', title: 'CellID.co', url: 'https://cellid.co/cell' }
         ]
     },
-
-    // ===== TIỆN ÍCH =====
     utility: {
         icon: '⚡',
         name: 'Tiện ích',
@@ -63,12 +54,15 @@ const categories = {
             { icon: '🌙', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' }
         ]
     },
-
-    // ===== TÍNH TOÁN =====
     calculator: {
         icon: '🧮',
         name: 'Tính toán',
         isCalculator: true
+    },
+    route: {
+        icon: '📍',
+        name: 'Lộ trình',
+        isRoute: true
     }
 };
 
@@ -78,7 +72,6 @@ const categories = {
 function renderTab(tabId) {
     const container = document.getElementById('tabContent');
     const category = categories[tabId];
-    
     if (!category) return;
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -88,6 +81,13 @@ function renderTab(tabId) {
     if (category.isCalculator) {
         container.innerHTML = renderCalculator();
         attachCalculatorEvents();
+        return;
+    }
+
+    if (category.isRoute) {
+        container.innerHTML = renderRoute();
+        // Khởi tạo map sau khi render
+        setTimeout(() => initRouteMap(), 300);
         return;
     }
 
@@ -134,7 +134,6 @@ function renderCalculator() {
                     </button>
                 </div>
 
-                <!-- FORMULA MODE -->
                 <div id="formulaMode" class="mode-panel active">
                     <div class="calc-form">
                         <div class="form-group">
@@ -146,27 +145,14 @@ function renderCalculator() {
                     </div>
                     <div id="resultContainer" style="display: none;">
                         <div class="result-grid">
-                            <div class="result-card">
-                                <div class="result-label">📊 KQ1</div>
-                                <div class="result-value" id="result1">0</div>
-                            </div>
-                            <div class="result-card">
-                                <div class="result-label">📊 KQ2</div>
-                                <div class="result-value" id="result2">0</div>
-                            </div>
-                            <div class="result-card">
-                                <div class="result-label">📊 KQ3</div>
-                                <div class="result-value" id="result3">0</div>
-                            </div>
-                            <div class="result-card">
-                                <div class="result-label">📊 KQ4</div>
-                                <div class="result-value" id="result4">0</div>
-                            </div>
+                            <div class="result-card"><div class="result-label">📊 KQ1</div><div class="result-value" id="result1">0</div></div>
+                            <div class="result-card"><div class="result-label">📊 KQ2</div><div class="result-value" id="result2">0</div></div>
+                            <div class="result-card"><div class="result-label">📊 KQ3</div><div class="result-value" id="result3">0</div></div>
+                            <div class="result-card"><div class="result-label">📊 KQ4</div><div class="result-value" id="result4">0</div></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- HEX MODE -->
                 <div id="hexMode" class="mode-panel" style="display:none;">
                     <div class="calc-form">
                         <div class="form-group">
@@ -182,14 +168,8 @@ function renderCalculator() {
                                 <div class="result-label">📥 Hex (đầu vào)</div>
                                 <div class="result-value" id="hexInputDisplay" style="font-size:20px; color:#3b82f6;">-</div>
                             </div>
-                            <div class="result-card">
-                                <div class="result-label">📊 Thập phân (Decimal)</div>
-                                <div class="result-value" id="decResult">0</div>
-                            </div>
-                            <div class="result-card">
-                                <div class="result-label">📊 Nhị phân (Binary)</div>
-                                <div class="result-value" id="binResult" style="font-size:18px;">0</div>
-                            </div>
+                            <div class="result-card"><div class="result-label">📊 Thập phân</div><div class="result-value" id="decResult">0</div></div>
+                            <div class="result-card"><div class="result-label">📊 Nhị phân</div><div class="result-value" id="binResult" style="font-size:18px;">0</div></div>
                         </div>
                         <div class="calc-detail" id="hexDetailInfo"></div>
                     </div>
@@ -200,217 +180,319 @@ function renderCalculator() {
 }
 
 // ============================================================
-// GÁN SỰ KIỆN CHO CALCULATOR
+// CALCULATOR EVENTS
 // ============================================================
 function attachCalculatorEvents() {
     const inputX = document.getElementById('inputX');
-    if (inputX) {
-        inputX.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') calculate();
-        });
-    }
-
+    if (inputX) inputX.addEventListener('keypress', e => { if (e.key === 'Enter') calculate(); });
     const inputHex = document.getElementById('inputHex');
-    if (inputHex) {
-        inputHex.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') convertHexToDec();
-        });
-    }
+    if (inputHex) inputHex.addEventListener('keypress', e => { if (e.key === 'Enter') convertHexToDec(); });
 }
 
-// ============================================================
-// SWITCH MODE
-// ============================================================
 window.switchMode = function(mode) {
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-    });
-
-    const formulaMode = document.getElementById('formulaMode');
-    const hexMode = document.getElementById('hexMode');
-    
-    if (formulaMode) formulaMode.style.display = mode === 'formula' ? 'block' : 'none';
-    if (hexMode) hexMode.style.display = mode === 'hex' ? 'block' : 'none';
+    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    document.getElementById('formulaMode').style.display = mode === 'formula' ? 'block' : 'none';
+    document.getElementById('hexMode').style.display = mode === 'hex' ? 'block' : 'none';
 };
 
-// ============================================================
-// TÍNH TOÁN CHUYỂN CELL - DEC (BỎ DẤU NGĂN CÁCH)
-// ============================================================
 window.calculate = function() {
     const input = document.getElementById('inputX');
     if (!input) return;
-    
     const X = input.value.trim();
-    
-    if (X.length < 6) {
-        alert('⚠️ X phải có ít nhất 6 chữ số!');
-        input.focus();
-        return;
-    }
+    if (X.length < 6) { alert('⚠️ X phải có ít nhất 6 chữ số!'); input.focus(); return; }
+    if (!/^\d+$/.test(X)) { alert('⚠️ Vui lòng chỉ nhập số!'); input.focus(); return; }
 
-    if (!/^\d+$/.test(X)) {
-        alert('⚠️ Vui lòng chỉ nhập số!');
-        input.focus();
-        return;
-    }
-
-    const a1 = Number(X.slice(-5));
-    const b1 = Number(X.slice(0, -5));
+    const a1 = Number(X.slice(-5)), b1 = Number(X.slice(0, -5));
     const kq1 = b1 * 65536 + a1;
-
-    const a2 = Number(X.slice(-4));
-    const b2 = Number(X.slice(0, -4));
+    const a2 = Number(X.slice(-4)), b2 = Number(X.slice(0, -4));
     const kq2 = b2 * 1048576 + a2;
-
     const kq3 = kq1;
-
-    const a4 = Number(X.slice(-5));
-    const b4 = Number(X.slice(0, -5));
+    const a4 = Number(X.slice(-5)), b4 = Number(X.slice(0, -5));
     const kq4 = b4 * 1048576 + a4;
 
-    // HIỂN THỊ KHÔNG DẤU NGĂN CÁCH
-    const r1 = document.getElementById('result1');
-    const r2 = document.getElementById('result2');
-    const r3 = document.getElementById('result3');
-    const r4 = document.getElementById('result4');
-    
-    if (r1) r1.textContent = kq1.toString();
-    if (r2) r2.textContent = kq2.toString();
-    if (r3) r3.textContent = kq3.toString();
-    if (r4) r4.textContent = kq4.toString();
-
-    const container = document.getElementById('resultContainer');
-    if (container) container.style.display = 'block';
+    document.getElementById('result1').textContent = kq1.toString();
+    document.getElementById('result2').textContent = kq2.toString();
+    document.getElementById('result3').textContent = kq3.toString();
+    document.getElementById('result4').textContent = kq4.toString();
+    document.getElementById('resultContainer').style.display = 'block';
 };
 
-// ============================================================
-// XÓA KẾT QUẢ FORMULA
-// ============================================================
 window.clearResult = function() {
-    const input = document.getElementById('inputX');
-    if (input) input.value = '';
-    
-    const container = document.getElementById('resultContainer');
-    if (container) container.style.display = 'none';
-    
-    if (input) input.focus();
+    document.getElementById('inputX').value = '';
+    document.getElementById('resultContainer').style.display = 'none';
+    document.getElementById('inputX').focus();
 };
 
-// ============================================================
-// HEX → DEC (BỎ DẤU NGĂN CÁCH)
-// ============================================================
 window.convertHexToDec = function() {
     const input = document.getElementById('inputHex');
     if (!input) return;
-    
     const hexStr = input.value.trim().toUpperCase();
-
-    if (!hexStr) {
-        alert('⚠️ Vui lòng nhập số thập lục phân!');
-        input.focus();
-        return;
-    }
-
-    if (!/^[0-9A-F]+$/.test(hexStr)) {
-        alert('⚠️ Chỉ nhập ký tự hợp lệ: 0-9 và A-F!');
-        input.focus();
-        return;
-    }
+    if (!hexStr) { alert('⚠️ Vui lòng nhập số thập lục phân!'); input.focus(); return; }
+    if (!/^[0-9A-F]+$/.test(hexStr)) { alert('⚠️ Chỉ nhập 0-9 và A-F!'); input.focus(); return; }
 
     const decValue = parseInt(hexStr, 16);
     const binValue = decValue.toString(2);
 
-    const hexDisplay = document.getElementById('hexInputDisplay');
-    const decDisplay = document.getElementById('decResult');
-    const binDisplay = document.getElementById('binResult');
-    const detailInfo = document.getElementById('hexDetailInfo');
-    const container = document.getElementById('hexResultContainer');
+    document.getElementById('hexInputDisplay').textContent = hexStr;
+    document.getElementById('decResult').textContent = decValue.toString();
+    document.getElementById('binResult').textContent = binValue;
+    document.getElementById('hexDetailInfo').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
+            <div><strong>🔢 Hex:</strong> ${hexStr}</div>
+            <div><strong>📊 Dec:</strong> ${decValue.toString()}</div>
+            <div><strong>📘 Bin:</strong> ${binValue}</div>
+            <div><strong>🔢 Số chữ số:</strong> ${hexStr.length} ký tự Hex</div>
+        </div>
+    `;
+    document.getElementById('hexResultContainer').style.display = 'block';
+};
 
-    if (hexDisplay) hexDisplay.textContent = hexStr;
-    if (decDisplay) decDisplay.textContent = decValue.toString();
-    if (binDisplay) binDisplay.textContent = binValue;
+window.clearHexResult = function() {
+    document.getElementById('inputHex').value = '';
+    document.getElementById('hexResultContainer').style.display = 'none';
+    document.getElementById('inputHex').focus();
+};
 
-    if (detailInfo) {
-        detailInfo.innerHTML = `
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
-                <div><strong>🔢 Hex:</strong> ${hexStr}</div>
-                <div><strong>📊 Dec:</strong> ${decValue.toString()}</div>
-                <div><strong>📘 Bin:</strong> ${binValue}</div>
-                <div><strong>🔢 Số chữ số:</strong> ${hexStr.length} ký tự Hex</div>
+// ============================================================
+// ROUTE - RENDER
+// ============================================================
+function renderRoute() {
+    const points = getRoutePoints();
+    return `
+        <div class="tab-panel active">
+            <div class="route-container">
+                <div class="route-header">
+                    <span class="route-icon">📍</span>
+                    <h2>Lộ trình di chuyển</h2>
+                    <p class="route-desc">Nhập các điểm đến, xem hành trình trên bản đồ OSM</p>
+                </div>
+
+                <div class="route-form">
+                    <div class="route-inputs">
+                        <input type="text" id="routeLat" placeholder="Vĩ độ (VD: 21.0285)" />
+                        <input type="text" id="routeLng" placeholder="Kinh độ (VD: 105.8542)" />
+                        <input type="text" id="routeNote" placeholder="Ghi chú (VD: Hà Nội - 8:00)" />
+                        <button class="btn btn-primary" onclick="addRoutePoint()">➕ Thêm điểm</button>
+                    </div>
+                </div>
+
+                <div id="routeList">
+                    ${points.length === 0 ? '<p class="route-empty">Chưa có điểm nào. Hãy thêm điểm đầu tiên!</p>' : ''}
+                    <ul class="route-points">
+                        ${points.map((p, index) => `
+                            <li class="route-point" data-index="${index}">
+                                <span class="route-stt">${index + 1}</span>
+                                <span class="route-note">${p.note || `Điểm ${index + 1}`}</span>
+                                <button class="btn-remove" onclick="removeRoutePoint(${index})">✕</button>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div class="route-actions">
+                    <button class="btn btn-primary" onclick="updateRouteMap()" ${points.length < 2 ? 'disabled' : ''}>
+                        🗺️ Vẽ lộ trình trên bản đồ
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearAllRoutePoints()">🗑️ Xóa tất cả</button>
+                </div>
+
+                <div id="mapContainer"></div>
             </div>
-        `;
+        </div>
+    `;
+}
+
+// ============================================================
+// ROUTE - LƯU TRỮ
+// ============================================================
+function getRoutePoints() {
+    return JSON.parse(localStorage.getItem('routePoints')) || [];
+}
+function saveRoutePoints(points) {
+    localStorage.setItem('routePoints', JSON.stringify(points));
+}
+function renderRouteTab() {
+    const container = document.getElementById('tabContent');
+    container.innerHTML = renderRoute();
+    setTimeout(() => initRouteMap(), 300);
+}
+
+window.addRoutePoint = function() {
+    const latInput = document.getElementById('routeLat');
+    const lngInput = document.getElementById('routeLng');
+    const noteInput = document.getElementById('routeNote');
+    const lat = parseFloat(latInput.value.trim());
+    const lng = parseFloat(lngInput.value.trim());
+    const note = noteInput.value.trim() || `Điểm ${getRoutePoints().length + 1}`;
+
+    if (isNaN(lat) || isNaN(lng)) { alert('⚠️ Vui lòng nhập đúng vĩ độ và kinh độ!'); return; }
+    if (lat < -90 || lat > 90 || lng < -180 || lng > 180) { alert('⚠️ Vĩ độ từ -90 đến 90, kinh độ từ -180 đến 180!'); return; }
+
+    const points = getRoutePoints();
+    points.push({ lat, lng, note });
+    saveRoutePoints(points);
+    renderRouteTab();
+};
+
+window.removeRoutePoint = function(index) {
+    const points = getRoutePoints();
+    points.splice(index, 1);
+    saveRoutePoints(points);
+    renderRouteTab();
+};
+
+window.clearAllRoutePoints = function() {
+    if (confirm('Bạn có chắc muốn xóa tất cả điểm?')) {
+        saveRoutePoints([]);
+        renderRouteTab();
+    }
+};
+
+// ============================================================
+// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH
+// ============================================================
+let map, polylineLayer, markerLayer;
+
+function initRouteMap() {
+    const container = document.getElementById('mapContainer');
+    if (!container) return;
+    if (map) {
+        map.invalidateSize();
+        updateRouteMap();
+        return;
     }
 
-    if (container) container.style.display = 'block';
+    // Khởi tạo map với tile OSM
+    map = L.map('mapContainer', {
+        center: [21.0285, 105.8542],
+        zoom: 13,
+        zoomControl: true,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+    }).addTo(map);
+
+    // Layers
+    polylineLayer = L.layerGroup().addTo(map);
+    markerLayer = L.layerGroup().addTo(map);
+
+    // Vẽ route nếu có điểm
+    updateRouteMap();
+
+    // Resize map khi tab được hiển thị
+    setTimeout(() => map.invalidateSize(), 500);
+}
+
+// ============================================================
+// CẬP NHẬT LỘ TRÌNH TRÊN MAP
+// ============================================================
+window.updateRouteMap = function() {
+    const points = getRoutePoints();
+    if (!map) return;
+
+    // Xóa layer cũ
+    polylineLayer.clearLayers();
+    markerLayer.clearLayers();
+
+    if (points.length === 0) {
+        // Không có điểm, đưa về vị trí mặc định
+        map.setView([21.0285, 105.8542], 13);
+        return;
+    }
+
+    // Tạo marker cho từng điểm
+    points.forEach((p, index) => {
+        const label = index + 1;
+        const icon = L.divIcon({
+            className: 'marker-label',
+            html: `<div style="
+                font-family: 'Times New Roman', Times, serif !important;
+                font-size: 13px !important;
+                color: black !important;
+                font-weight: bold !important;
+                background: white;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid black;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                background-color: #3b82f6;
+                color: white !important;
+            ">${label}</div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+        });
+
+        const marker = L.marker([p.lat, p.lng], { icon })
+            .bindPopup(p.note || `Điểm ${index + 1}`)
+            .addTo(markerLayer);
+    });
+
+    // Vẽ polyline nối các điểm (nếu >= 2)
+    if (points.length >= 2) {
+        const latlngs = points.map(p => [p.lat, p.lng]);
+        const polyline = L.polyline(latlngs, {
+            color: 'black',
+            weight: 5,
+            opacity: 1,
+            dashArray: null,
+            smoothFactor: 1,
+        }).addTo(polylineLayer);
+
+        // Zoom để hiển thị tất cả điểm
+        const bounds = L.latLngBounds(latlngs);
+        map.fitBounds(bounds, { padding: [50, 50] });
+    } else {
+        // Chỉ có 1 điểm, zoom vào điểm đó
+        map.setView([points[0].lat, points[0].lng], 15);
+    }
 };
 
 // ============================================================
-// XÓA KẾT QUẢ HEX
-// ============================================================
-window.clearHexResult = function() {
-    const input = document.getElementById('inputHex');
-    if (input) input.value = '';
-    
-    const container = document.getElementById('hexResultContainer');
-    if (container) container.style.display = 'none';
-    
-    if (input) input.focus();
-};
-
-// ============================================================
-// HIỆU ỨNG TYPING EFFECT
+// TYPING EFFECT
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
     const fullText = `👋 Chào mừng bạn đến với Cẩm nang toàn năng – Nơi hội tụ công cụ, AI và tri thức. ✨ Chúc bạn một ngày sáng tạo và hiệu quả!`;
     const welcomeElement = document.getElementById('welcomeText');
-    
     if (welcomeElement) {
         let charIndex = 0;
-
         function typeText() {
             if (charIndex < fullText.length) {
                 const cursor = welcomeElement.querySelector('.typing-cursor');
                 if (cursor) cursor.remove();
-                
                 let displayChar = fullText[charIndex];
-                
                 if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
                     displayChar = `<span class="highlight-welcome">${displayChar}`;
-                    if (charIndex + 1 < fullText.length && 
-                        fullText.substring(charIndex + 1).startsWith(' –')) {
+                    if (charIndex + 1 < fullText.length && fullText.substring(charIndex + 1).startsWith(' –')) {
                         displayChar += '</span>';
                     }
                 }
-                
-                welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + 
-                                          '<span class="typing-cursor"></span>';
-                
+                welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
                 charIndex++;
                 setTimeout(typeText, 30 + Math.random() * 40);
             } else {
                 const cursor = welcomeElement.querySelector('.typing-cursor');
                 if (cursor) cursor.remove();
-                
                 welcomeElement.innerHTML = fullText;
                 welcomeElement.innerHTML += '<span class="typing-cursor"></span>';
-                
                 setTimeout(() => {
                     const finalCursor = welcomeElement.querySelector('.typing-cursor');
                     if (finalCursor) finalCursor.remove();
                 }, 3000);
             }
         }
-
         setTimeout(typeText, 500);
     }
 
-    // ===== KHỞI TẠO TABS =====
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             renderTab(this.dataset.tab);
         });
     });
-
-    // ===== HIỂN THỊ TAB ĐẦU TIÊN =====
     renderTab('tool');
 });

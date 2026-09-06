@@ -1,7 +1,7 @@
 /* ============================================================
-   CSS VARIABLES - QUẢN LÝ MÀU SẮC TẬP TRUNG
+   CSS VARIABLES
    ============================================================ */
-:root {
+   :root {
     --primary: #0f172a;
     --primary-light: #1e293b;
     --primary-hover: #2d3a4f;
@@ -55,17 +55,14 @@ body {
     width: 8px;
     height: 8px;
 }
-
 ::-webkit-scrollbar-track {
     background: #f1f5f9;
     border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb {
     background: #94a3b8;
     border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: #64748b;
 }
@@ -86,17 +83,14 @@ body {
     gap: 12px;
     flex-wrap: wrap;
 }
-
 .logo-icon {
     font-size: 36px;
 }
-
 .logo h1 {
     font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.5px;
 }
-
 .badge {
     background: var(--accent);
     color: white;
@@ -107,7 +101,6 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
 .subtitle {
     margin-top: 4px;
     font-size: 15px;
@@ -127,7 +120,6 @@ body {
     display: flex;
     align-items: center;
 }
-
 .welcome-text {
     font-size: 16px;
     line-height: 1.6;
@@ -138,7 +130,6 @@ body {
     align-items: center;
     flex-wrap: wrap;
 }
-
 .typing-cursor {
     display: inline-block;
     width: 2px;
@@ -148,12 +139,10 @@ body {
     animation: blink 0.8s step-end infinite;
     vertical-align: text-bottom;
 }
-
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
-
 .highlight-welcome {
     color: #93c5fd;
     font-weight: 500;
@@ -171,13 +160,11 @@ body {
     z-index: 100;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
-
 .tabs-nav .container {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
 }
-
 .tab-btn {
     padding: 10px 20px;
     border: none;
@@ -191,18 +178,15 @@ body {
     font-family: inherit;
     position: relative;
 }
-
 .tab-btn:hover {
     background: #f1f5f9;
     color: var(--text-primary);
 }
-
 .tab-btn.active {
     background: var(--primary);
     color: white;
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
 }
-
 .tab-btn.active::after {
     content: '';
     position: absolute;
@@ -221,11 +205,9 @@ body {
     display: none;
     animation: fadeIn 0.3s ease;
 }
-
 .tab-panel.active {
     display: block;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -237,7 +219,6 @@ body {
 .category {
     margin-top: 24px;
 }
-
 .category-header {
     display: flex;
     align-items: center;
@@ -246,17 +227,14 @@ body {
     padding-bottom: 8px;
     border-bottom: 2px solid var(--border);
 }
-
 .cat-icon {
     font-size: 22px;
 }
-
 .category-header h2 {
     font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
 }
-
 .count {
     background: var(--border);
     color: #475569;
@@ -268,31 +246,27 @@ body {
 }
 
 /* ============================================================
-   CARD - HIỂN THỊ HÀNG NGANG (CUỘN NGANG)
+   CARD - HÀNG NGANG CUỘN
    ============================================================ */
 .card-grid {
-    display: flex;
-    flex-wrap: nowrap;
+    display: flex !important;
+    flex-wrap: nowrap !important;
     gap: 12px;
-    overflow-x: auto;
+    overflow-x: auto !important;
     padding: 8px 4px 12px 4px;
     scroll-behavior: smooth;
 }
-
 .card-grid::-webkit-scrollbar {
     height: 6px;
 }
-
 .card-grid::-webkit-scrollbar-track {
     background: #f1f5f9;
     border-radius: 4px;
 }
-
 .card-grid::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 4px;
 }
-
 .card-grid::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
 }
@@ -306,19 +280,18 @@ body {
     transition: all var(--transition);
     text-decoration: none;
     color: var(--text-secondary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
     gap: 4px;
     min-width: 100px;
     max-width: 120px;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
     cursor: pointer;
     animation: cardFadeIn 0.4s ease forwards;
     opacity: 0;
 }
-
 .card:nth-child(1) { animation-delay: 0.03s; }
 .card:nth-child(2) { animation-delay: 0.06s; }
 .card:nth-child(3) { animation-delay: 0.09s; }
@@ -329,31 +302,20 @@ body {
 .card:nth-child(8) { animation-delay: 0.24s; }
 .card:nth-child(9) { animation-delay: 0.27s; }
 .card:nth-child(10) { animation-delay: 0.30s; }
-.card:nth-child(11) { animation-delay: 0.33s; }
-.card:nth-child(12) { animation-delay: 0.36s; }
 
 @keyframes cardFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
 .card:hover {
     transform: translateY(-2px) scale(1.02);
     box-shadow: 0 6px 16px var(--shadow-hover);
     border-color: var(--accent);
 }
-
 .card .card-icon {
     font-size: 28px;
     line-height: 1.2;
 }
-
 .card .card-title {
     font-size: 13px;
     font-weight: 600;
@@ -361,7 +323,6 @@ body {
     line-height: 1.3;
     word-break: break-word;
 }
-
 .card .card-desc,
 .card .card-tag {
     display: none;
@@ -377,30 +338,25 @@ body {
     margin-top: 20px;
     box-shadow: 0 1px 3px var(--shadow);
 }
-
 .calculator-header {
     text-align: center;
     margin-bottom: 24px;
 }
-
 .calc-icon {
     font-size: 40px;
     display: block;
     margin-bottom: 4px;
 }
-
 .calculator-header h2 {
     font-size: 22px;
     font-weight: 700;
     color: var(--text-primary);
 }
-
 .calc-desc {
     color: var(--text-muted);
     font-size: 14px;
     margin-top: 4px;
 }
-
 .calc-mode-selector {
     display: flex;
     gap: 8px;
@@ -408,7 +364,6 @@ body {
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
-
 .mode-btn {
     padding: 8px 20px;
     border: 2px solid var(--border);
@@ -421,22 +376,18 @@ body {
     transition: all var(--transition);
     font-family: inherit;
 }
-
 .mode-btn:hover {
     border-color: #94a3b8;
     color: var(--text-primary);
 }
-
 .mode-btn.active {
     border-color: var(--primary);
     background: var(--primary);
     color: white;
 }
-
 .mode-panel {
     animation: fadeIn 0.3s ease;
 }
-
 .calc-form {
     display: flex;
     flex-wrap: wrap;
@@ -445,7 +396,6 @@ body {
     justify-content: center;
     margin-bottom: 20px;
 }
-
 .calc-form .form-group {
     display: flex;
     flex-wrap: wrap;
@@ -454,13 +404,11 @@ body {
     justify-content: center;
     width: 100%;
 }
-
 .calc-form label {
     font-weight: 600;
     font-size: 15px;
     color: var(--text-primary);
 }
-
 .calc-form input {
     padding: 10px 16px;
     border: 2px solid var(--border);
@@ -471,20 +419,17 @@ body {
     font-family: 'Courier New', monospace;
     transition: border-color 0.3s;
 }
-
 .calc-form input:focus {
     border-color: var(--accent);
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
-
 .result-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     margin-top: 16px;
 }
-
 .result-card {
     background: #f8fafc;
     border-radius: 10px;
@@ -493,19 +438,16 @@ body {
     border: 1px solid var(--border-card);
     transition: all 0.2s;
 }
-
 .result-card:hover {
     border-color: var(--accent);
     box-shadow: 0 4px 12px var(--shadow);
 }
-
 .result-label {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-muted);
     margin-bottom: 4px;
 }
-
 .result-value {
     font-size: 28px;
     font-weight: 700;
@@ -513,7 +455,6 @@ body {
     font-family: 'Courier New', monospace;
     word-break: break-all;
 }
-
 .calc-detail {
     margin-top: 16px;
 }
@@ -528,23 +469,19 @@ body {
     transition: all var(--transition);
     font-family: inherit;
 }
-
 .btn-primary {
     background: var(--primary);
     color: white;
 }
-
 .btn-primary:hover {
     background: var(--primary-light);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
-
 .btn-secondary {
     background: var(--border);
     color: #475569;
 }
-
 .btn-secondary:hover {
     background: #cbd5e1;
 }
@@ -554,6 +491,143 @@ body {
 .tab-btn:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+/* ============================================================
+   ROUTE
+   ============================================================ */
+.route-container {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px var(--shadow);
+}
+.route-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+.route-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 4px;
+}
+.route-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.route-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+}
+.route-form {
+    margin-bottom: 20px;
+}
+.route-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.route-inputs input {
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    flex: 1;
+    min-width: 140px;
+    transition: border-color 0.3s;
+}
+.route-inputs input:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.route-inputs .btn {
+    flex-shrink: 0;
+}
+.route-points {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+}
+.route-point {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    border-left: 3px solid var(--accent);
+    transition: background 0.2s;
+}
+.route-point:hover {
+    background: #f1f5f9;
+}
+.route-stt {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    min-width: 28px;
+}
+.route-note {
+    flex: 1;
+    font-size: 15px;
+    color: var(--text-primary);
+}
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.btn-remove:hover {
+    background: #fee2e2;
+}
+.route-empty {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+}
+.route-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+}
+.route-actions .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   MAP (Leaflet)
+   ============================================================ */
+#mapContainer {
+    margin-top: 20px;
+    width: 100%;
+    height: 500px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+/* Tùy chỉnh marker label */
+.marker-label {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 13px !important;
+    color: black !important;
+    font-weight: bold !important;
+    text-shadow: 1px 1px 2px white, -1px -1px 2px white;
 }
 
 /* ============================================================
@@ -567,7 +641,6 @@ body {
     color: var(--text-muted);
     font-size: 14px;
 }
-
 .footer-small {
     font-size: 13px;
     color: var(--text-light);
@@ -578,65 +651,29 @@ body {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 640px) {
-    .logo h1 {
-        font-size: 22px;
-    }
-    .card {
-        min-width: 80px;
-        max-width: 100px;
-        padding: 10px 12px;
-    }
-    .card .card-icon {
-        font-size: 22px;
-    }
-    .card .card-title {
-        font-size: 11px;
-    }
-    .welcome-text {
-        font-size: 14px;
-    }
-    .welcome-section {
-        padding: 10px 14px;
-        min-height: 60px;
-    }
-    .calc-form input {
-        width: 100%;
-    }
-    .result-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .mode-btn {
-        flex: 1;
-        text-align: center;
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-    .tab-btn {
-        font-size: 13px;
-        padding: 8px 14px;
-    }
-    .tab-btn.active::after {
-        left: 20%;
-        width: 60%;
-    }
+    .logo h1 { font-size: 22px; }
+    .card { min-width: 80px; max-width: 100px; padding: 10px 12px; }
+    .card .card-icon { font-size: 22px; }
+    .card .card-title { font-size: 11px; }
+    .welcome-text { font-size: 14px; }
+    .welcome-section { padding: 10px 14px; min-height: 60px; }
+    .calc-form input { width: 100%; }
+    .result-grid { grid-template-columns: 1fr 1fr; }
+    .mode-btn { flex: 1; text-align: center; font-size: 13px; padding: 8px 12px; }
+    .tab-btn { font-size: 13px; padding: 8px 14px; }
+    .tab-btn.active::after { left: 20%; width: 60%; }
+    .route-inputs { flex-direction: column; }
+    .route-inputs input { width: 100%; min-width: unset; }
+    .route-inputs .btn { width: 100%; }
+    .route-actions { flex-direction: column; }
+    .route-actions .btn { width: 100%; }
+    #mapContainer { height: 350px; }
 }
-
 @media (max-width: 480px) {
-    .card {
-        min-width: 70px;
-        max-width: 85px;
-        padding: 8px 10px;
-    }
-    .card .card-icon {
-        font-size: 18px;
-    }
-    .card .card-title {
-        font-size: 10px;
-    }
-    .result-grid {
-        grid-template-columns: 1fr;
-    }
-    .calculator-container {
-        padding: 16px;
-    }
+    .card { min-width: 70px; max-width: 85px; padding: 8px 10px; }
+    .card .card-icon { font-size: 18px; }
+    .card .card-title { font-size: 10px; }
+    .result-grid { grid-template-columns: 1fr; }
+    .calculator-container { padding: 16px; }
+    #mapContainer { height: 280px; }
 }
