@@ -120,7 +120,6 @@ body {
     gap: 14px;
 }
 
-/* ===== LOGO - KÍCH THƯỚC TO ===== */
 .logo-icon {
     width: 70px;
     height: 70px;
@@ -741,6 +740,200 @@ body {
 }
 
 /* ============================================================
+   SEARCH DATA
+   ============================================================ */
+.search-data-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-top: 20px;
+    box-shadow: 0 1px 4px var(--shadow);
+    border: 1px solid var(--border-card);
+}
+
+.search-data-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.search-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.search-data-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.search-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* ===== FILTERS ===== */
+.search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 120px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.filter-group input {
+    padding: 8px 12px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    transition: border-color 0.3s;
+    font-family: 'Courier New', monospace;
+}
+
+.filter-group input:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-bottom: 1px;
+}
+
+/* ===== STATS ===== */
+.search-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 4px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.search-stats strong {
+    color: var(--text-primary);
+}
+
+.search-stats i {
+    margin-right: 4px;
+}
+
+/* ===== TABLE ===== */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table thead {
+    background: var(--primary);
+    color: white;
+}
+
+.data-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.data-table tbody tr:hover {
+    background: #f1f5f9;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #fafcfd;
+}
+
+.data-table tbody tr:nth-child(even):hover {
+    background: #f1f5f9;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: white;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 14px;
+    min-width: 36px;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.pagination button.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    padding: 6px 8px;
+    color: var(--text-muted);
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer {
@@ -857,6 +1050,30 @@ body {
     .route-actions .btn {
         width: 100%;
     }
+    .search-filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 16px;
+    }
+    .filter-group {
+        min-width: unset;
+    }
+    .filter-actions {
+        justify-content: flex-end;
+        margin-top: 4px;
+    }
+    .data-table {
+        font-size: 13px;
+    }
+    .data-table th,
+    .data-table td {
+        padding: 8px 12px;
+    }
+    .search-stats {
+        font-size: 13px;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -899,5 +1116,17 @@ body {
     }
     .welcome-text {
         font-size: 13px;
+    }
+    .data-table {
+        font-size: 12px;
+    }
+    .data-table th,
+    .data-table td {
+        padding: 6px 8px;
+    }
+    .pagination button {
+        padding: 4px 8px;
+        font-size: 12px;
+        min-width: 30px;
     }
 }

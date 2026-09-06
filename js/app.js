@@ -12,7 +12,8 @@ const categories = {
         items: [
             { icon: 'fa-file-pdf', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
             { icon: 'fa-image', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
-            { icon: 'fa-arrows-rotate', title: 'Convertio', url: 'https://convertio.co/vn/' }
+            { icon: 'fa-arrows-rotate', title: 'Convertio', url: 'https://convertio.co/vn/' },
+            { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://www.convertcsv.com/csv-to-json.htm' }
         ]
     },
     ai: {
@@ -556,7 +557,7 @@ async function loadData() {
 }
 
 // ============================================================
-// HÀM TÌM KIẾM (DÙNG TÊN CỘT HOA: MNC, LAC, CELL, TOADO)
+// HÀM TÌM KIẾM
 // ============================================================
 window.searchData = function() {
     if (!isDataLoaded) return;
@@ -599,7 +600,7 @@ window.clearFilters = function() {
 };
 
 // ============================================================
-// HÀM MỞ GOOGLE MAPS KHI CLICK VÀO TỌA ĐỘ
+// HÀM MỞ GOOGLE MAPS
 // ============================================================
 window.openGoogleMaps = function(toado) {
     if (!toado) return;
@@ -613,7 +614,7 @@ window.openGoogleMaps = function(toado) {
 };
 
 // ============================================================
-// HÀM RENDER BẢNG (DÙNG TÊN CỘT HOA)
+// HÀM RENDER BẢNG
 // ============================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
