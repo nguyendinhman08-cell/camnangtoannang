@@ -3,65 +3,64 @@
 // ============================================================
 
 // ============================================================
-/// ============================================================
-// DỮ LIỆU CÁC DANH MỤC - CẬP NHẬT ICON ĐẸP
+// DỮ LIỆU CÁC DANH MỤC
 // ============================================================
 const categories = {
     tool: {
-        icon: 'fa-tools',
+        icon: '🛠️',
         name: 'Công cụ',
         items: [
-            { icon: 'fa-file-pdf', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
-            { icon: 'fa-image', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
-            { icon: 'fa-arrows-rotate', title: 'Convertio', url: 'https://convertio.co/vn/' }
+            { icon: '📄', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
+            { icon: '🖼️', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
+            { icon: '🔄', title: 'Convertio', url: 'https://convertio.co/vn/' }
         ]
     },
     ai: {
-        icon: 'fa-robot',
+        icon: '🤖',
         name: 'AI Phổ thông',
         items: [
-            { icon: 'fa-brain', title: 'ChatGPT', url: 'https://chatgpt.com/' },
-            { icon: 'fa-star', title: 'Gemini', url: 'https://gemini.google.com/app' },
-            { icon: 'fa-book', title: 'NotebookLM', url: 'https://notebook.google.com/' }
+            { icon: '🧠', title: 'ChatGPT', url: 'https://chatgpt.com/' },
+            { icon: '✨', title: 'Gemini', url: 'https://gemini.google.com/app' },
+            { icon: '📓', title: 'NotebookLM', url: 'https://notebook.google.com/' }
         ]
     },
     'ai-utility': {
-        icon: 'fa-wand-magic-sparkles',
+        icon: '🛠️',
         name: 'AI Tiện ích',
         items: [
-            { icon: 'fa-user-graduate', title: 'Ông Lão Tử', url: 'https://chatgpt.com/g/g-68d6b31640ec8191b945e7a0d7e876b0-ong-lao-tu' },
-            { icon: 'fa-graduation-cap', title: 'AI Học Trí Tuệ', url: 'https://chatgpt.com/g/g-9yBS1MigT-ai-hoc-tri-tue' },
-            { icon: 'fa-language', title: 'Học Ngoại Ngữ', url: 'https://chatgpt.com/g/g-67d79e355a948191a84e2d1b589d6a7d-hoc-ngoai-ngu-tieng-anh-trung-nhat-han' },
-            { icon: 'fa-pen-fancy', title: 'Trợ lý Viết Bài MXH', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo' }
+            { icon: '🧘', title: 'Ông Lão Tử', url: 'https://chatgpt.com/g/g-68d6b31640ec8191b945e7a0d7e876b0-ong-lao-tu' },
+            { icon: '📚', title: 'AI Học Trí Tuệ', url: 'https://chatgpt.com/g/g-9yBS1MigT-ai-hoc-tri-tue' },
+            { icon: '🌍', title: 'Học Ngoại Ngữ', url: 'https://chatgpt.com/g/g-67d79e355a948191a84e2d1b589d6a7d-hoc-ngoai-ngu-tieng-anh-trung-nhat-han' },
+            { icon: '✍️', title: 'Trợ lý Viết Bài MXH', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo' }
         ]
     },
     search: {
-        icon: 'fa-search-location',
+        icon: '📡',
         name: 'Tra cứu',
         items: [
-            { icon: 'fa-mobile-screen', title: 'IMEI.info', url: 'https://www.imei.info/' },
-            { icon: 'fa-magnifying-glass', title: 'IMEICheck', url: 'https://imeicheck.com/vi/kiem-tra-imei' },
-            { icon: 'fa-map-location-dot', title: 'MultiCellID', url: 'https://www.multicellid.com/dangnhap.php' },
-            { icon: 'fa-location-dot', title: 'FindCellID', url: 'https://findcellid.com/' },
-            { icon: 'fa-signal', title: 'CellID.co', url: 'https://cellid.co/cell' }
+            { icon: '📱', title: 'IMEI.info', url: 'https://www.imei.info/' },
+            { icon: '🔍', title: 'IMEICheck', url: 'https://imeicheck.com/vi/kiem-tra-imei' },
+            { icon: '🗺️', title: 'MultiCellID', url: 'https://www.multicellid.com/dangnhap.php' },
+            { icon: '📍', title: 'FindCellID', url: 'https://findcellid.com/' },
+            { icon: '📶', title: 'CellID.co', url: 'https://cellid.co/cell' }
         ]
     },
     utility: {
-        icon: 'fa-bolt',
+        icon: '⚡',
         name: 'Tiện ích',
         items: [
-            { icon: 'fa-video', title: 'YouTube', url: 'https://www.youtube.com' },
-            { icon: 'fa-cloud-sun', title: 'Thời tiết NB', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh' },
-            { icon: 'fa-moon', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' }
+            { icon: '🎬', title: 'YouTube', url: 'https://www.youtube.com' },
+            { icon: '🌤️', title: 'Thời tiết NB', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh' },
+            { icon: '🌙', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' }
         ]
     },
     calculator: {
-        icon: 'fa-calculator',
+        icon: '🧮',
         name: 'Tính toán',
         isCalculator: true
     },
     route: {
-        icon: 'fa-route',
+        icon: '📍',
         name: 'Lộ trình',
         isRoute: true
     }
