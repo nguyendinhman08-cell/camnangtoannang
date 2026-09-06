@@ -86,9 +86,6 @@ function renderTab(tabId) {
 
     if (category.isRoute) {
         container.innerHTML = renderRoute();
-        setTimeout(() => {
-            initRouteMap();
-        }, 500);
         return;
     }
 
@@ -265,7 +262,7 @@ function renderRoute() {
                 <div class="route-header">
                     <span class="route-icon">📍</span>
                     <h2>Lộ trình di chuyển</h2>
-                    <p class="route-desc">Nhập các điểm đến, xem hành trình trên bản đồ</p>
+                    <p class="route-desc">Nhập các điểm đến, sau đó xem trên bản đồ OsmAPP</p>
                 </div>
 
                 <div class="route-form">
@@ -291,13 +288,11 @@ function renderRoute() {
                 </div>
 
                 <div class="route-actions">
-                    <button class="btn btn-primary" onclick="updateRouteMap()" ${points.length < 2 ? 'disabled' : ''}>
-                        🗺️ Vẽ lộ trình trên bản đồ
+                    <button class="btn btn-primary" onclick="buildRoute()" ${points.length < 2 ? 'disabled' : ''}>
+                        🗺️ Xem lộ trình trên OsmAPP
                     </button>
                     <button class="btn btn-secondary" onclick="clearAllRoutePoints()">🗑️ Xóa tất cả</button>
                 </div>
-
-                <div id="mapContainer"></div>
             </div>
         </div>
     `;
@@ -315,7 +310,6 @@ function saveRoutePoints(points) {
 function renderRouteTab() {
     const container = document.getElementById('tabContent');
     container.innerHTML = renderRoute();
-    setTimeout(() => initRouteMap(), 500);
 }
 
 window.addRoutePoint = function() {
@@ -324,13 +318,13 @@ window.addRoutePoint = function() {
     const noteInput = document.getElementById('routeNote');
     const lat = parseFloat(latInput.value.trim());
     const lng = parseFloat(lngInput.value.trim());
-    const note = noteInput.value.trim(); // KHÔNG TỰ ĐỘNG THÊM GHI CHÚ
+    const note = noteInput.value.trim();
 
     if (isNaN(lat) || isNaN(lng)) { alert('⚠️ Vui lòng nhập đúng vĩ độ và kinh độ!'); return; }
     if (lat < -90 || lat > 90 || lng < -180 || lng > 180) { alert('⚠️ Vĩ độ từ -90 đến 90, kinh độ từ -180 đến 180!'); return; }
 
     const points = getRoutePoints();
-    points.push({ lat, lng, note }); // note có thể là rỗng
+    points.push({ lat, lng, note });
     saveRoutePoints(points);
     renderRouteTab();
 };
@@ -350,182 +344,26 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (DÙNG TILE ỔN ĐỊNH)
+// XÂY DỰNG HÀNH TRÌNH TRÊN OSMAPP (MỞ TAB MỚI)
 // ============================================================
-let map = null;
-let polylineLayer = null;
-let markerLayer = null;
-
-function initRouteMap() {
-    const container = document.getElementById('mapContainer');
-    if (!container) {
-        console.log('❌ Không tìm thấy mapContainer');
-        return;
-    }
-
-    if (map) {
-        console.log('🔄 Map đã tồn tại');
-        map.invalidateSize();
-        updateRouteMap();
-        return;
-    }
-
-    console.log('🗺️ Đang khởi tạo map...');
-
-    try {
-        map = L.map('mapContainer', {
-            center: [21.0285, 105.8542],
-            zoom: 13,
-            zoomControl: true,
-        });
-
-        // ===== DÙNG TILE SERVER ỔN ĐỊNH NHẤT =====
-        // CartoDB Voyager (đẹp, ổn định)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap, CartoDB',
-            maxZoom: 19,
-            subdomains: 'abcd',
-        }).addTo(map);
-
-        // ===== DỰ PHÒNG: NẾU CARTO LỖI, DÙNG STAMEN =====
-        /*
-        L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap, Stamen Design',
-            maxZoom: 19,
-            subdomains: 'abcd',
-        }).addTo(map);
-        */
-
-        polylineLayer = L.layerGroup().addTo(map);
-        markerLayer = L.layerGroup().addTo(map);
-
-        console.log('✅ Map khởi tạo thành công');
-
-        updateRouteMap();
-
-        setTimeout(() => {
-            if (map) {
-                map.invalidateSize();
-                console.log('🔄 Resize map sau 300ms');
-            }
-        }, 300);
-
-        setTimeout(() => {
-            if (map) {
-                map.invalidateSize();
-                console.log('🔄 Resize map sau 800ms');
-            }
-        }, 800);
-
-    } catch (error) {
-        console.error('❌ Lỗi khởi tạo map:', error);
-        container.innerHTML = '<p style="color:red;padding:20px;text-align:center;">❌ Lỗi tải bản đồ. Vui lòng kiểm tra kết nối mạng hoặc thử lại sau.</p>';
-    }
-}
-
-// ============================================================
-// CẬP NHẬT LỘ TRÌNH TRÊN MAP - LABEL LUÔN HIỂN THỊ
-// ============================================================
-window.updateRouteMap = function() {
+window.buildRoute = function() {
     const points = getRoutePoints();
-    
-    if (!map) {
-        console.log('❌ Map chưa khởi tạo, thử khởi tạo lại...');
-        initRouteMap();
+    if (points.length < 2) {
+        alert('⚠️ Cần ít nhất 2 điểm để tạo lộ trình!');
         return;
     }
 
-    if (!polylineLayer || !markerLayer) {
-        polylineLayer = L.layerGroup().addTo(map);
-        markerLayer = L.layerGroup().addTo(map);
-    }
+    // Lấy điểm đầu và điểm cuối
+    const from = `${points[0].lat},${points[0].lng}`;
+    const to = `${points[points.length - 1].lat},${points[points.length - 1].lng}`;
 
-    polylineLayer.clearLayers();
-    markerLayer.clearLayers();
+    // Tạo URL đến OsmAPP
+    // OsmAPP hiện chưa hỗ trợ waypoints (điểm trung gian) qua URL,
+    // nhưng vẫn tạo được lộ trình với điểm đi và điểm đến
+    const url = `https://osmapp.org/directions?from=${from}&to=${to}&route=car`;
 
-    if (points.length === 0) {
-        map.setView([21.0285, 105.8542], 13);
-        return;
-    }
-
-    // Tạo marker cho từng điểm với STT LUÔN HIỂN THỊ
-    points.forEach((p, index) => {
-        const stt = index + 1;
-        
-        // ICON HÌNH TRÒN VỚI STT (LUÔN HIỂN THỊ)
-        const icon = L.divIcon({
-            className: 'marker-label',
-            html: `<div style="
-                font-family: 'Times New Roman', Times, serif !important;
-                font-size: 14px !important;
-                color: #ffffff !important;
-                font-weight: bold !important;
-                background: #2563eb;
-                border-radius: 50%;
-                width: 34px;
-                height: 34px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 2.5px solid #000000;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-                line-height: 1;
-            ">${stt}</div>`,
-            iconSize: [34, 34],
-            iconAnchor: [17, 17],
-        });
-
-        // Marker chính với STT
-        L.marker([p.lat, p.lng], { 
-            icon: icon,
-        }).addTo(markerLayer);
-
-        // CHỈ HIỂN THỊ GHI CHÚ NẾU CÓ NỘI DUNG
-        if (p.note && p.note.trim() !== '') {
-            const labelIcon = L.divIcon({
-                className: 'marker-label-text',
-                html: `<div style="
-                    font-family: 'Times New Roman', Times, serif !important;
-                    font-size: 13px !important;
-                    color: #000000 !important;
-                    font-weight: bold !important;
-                    background: rgba(255,255,255,0.92);
-                    padding: 3px 10px;
-                    border-radius: 4px;
-                    border: 1.5px solid #000000;
-                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-                    white-space: nowrap;
-                    text-align: center;
-                    margin-top: 6px;
-                ">${p.note}</div>`,
-                iconSize: [0, 0],
-                iconAnchor: [0, 0],
-            });
-
-            // Thêm ghi chú bên dưới marker (nếu có)
-            L.marker([p.lat - 0.001, p.lng], { 
-                icon: labelIcon,
-                interactive: false,
-            }).addTo(markerLayer);
-        }
-    });
-
-    // Vẽ polyline nối các điểm
-    if (points.length >= 2) {
-        const latlngs = points.map(p => [p.lat, p.lng]);
-        const polyline = L.polyline(latlngs, {
-            color: '#000000',
-            weight: 5,
-            opacity: 1,
-            smoothFactor: 1,
-        }).addTo(polylineLayer);
-
-        const bounds = L.latLngBounds(latlngs);
-        map.fitBounds(bounds, { padding: [60, 60] });
-        console.log('✅ Vẽ polyline thành công');
-    } else {
-        map.setView([points[0].lat, points[0].lng], 15);
-    }
+    // Mở tab mới
+    window.open(url, '_blank');
 };
 
 // ============================================================
