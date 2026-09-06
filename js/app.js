@@ -73,7 +73,7 @@ const categories = {
 };
 
 // ============================================================
-// RENDER TAB (HIỂN THỊ HÀNG NGANG)
+// RENDER TAB
 // ============================================================
 function renderTab(tabId) {
     const container = document.getElementById('tabContent');
@@ -200,7 +200,7 @@ function renderCalculator() {
 }
 
 // ============================================================
-// GÁN LẠI SỰ KIỆN CHO CALCULATOR SAU KHI RENDER
+// GÁN SỰ KIỆN CHO CALCULATOR
 // ============================================================
 function attachCalculatorEvents() {
     const inputX = document.getElementById('inputX');
@@ -268,7 +268,7 @@ window.calculate = function() {
     const b4 = Number(X.slice(0, -5));
     const kq4 = b4 * 1048576 + a4;
 
-    // HIỂN THỊ KHÔNG CÓ DẤU NGĂN CÁCH
+    // HIỂN THỊ KHÔNG DẤU NGĂN CÁCH
     const r1 = document.getElementById('result1');
     const r2 = document.getElementById('result2');
     const r3 = document.getElementById('result3');
@@ -327,7 +327,7 @@ window.convertHexToDec = function() {
     const container = document.getElementById('hexResultContainer');
 
     if (hexDisplay) hexDisplay.textContent = hexStr;
-    if (decDisplay) decDisplay.textContent = decValue.toString(); // KHÔNG DẤU NGĂN CÁCH
+    if (decDisplay) decDisplay.textContent = decValue.toString();
     if (binDisplay) binDisplay.textContent = binValue;
 
     if (detailInfo) {
@@ -361,7 +361,6 @@ window.clearHexResult = function() {
 // HIỆU ỨNG TYPING EFFECT
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Typing effect cho welcome
     const fullText = `👋 Chào mừng bạn đến với Cẩm nang toàn năng – Nơi hội tụ công cụ, AI và tri thức. ✨ Chúc bạn một ngày sáng tạo và hiệu quả!`;
     const welcomeElement = document.getElementById('welcomeText');
     

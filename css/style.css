@@ -49,7 +49,7 @@ body {
 }
 
 /* ============================================================
-   SCROLLBAR ĐẸP HƠN
+   SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar {
     width: 8px;
@@ -203,7 +203,6 @@ body {
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
 }
 
-/* Gạch dưới cho tab active */
 .tab-btn.active::after {
     content: '';
     position: absolute;
@@ -280,7 +279,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Tùy chỉnh thanh cuộn ngang cho card-grid */
 .card-grid::-webkit-scrollbar {
     height: 6px;
 }
@@ -321,7 +319,6 @@ body {
     opacity: 0;
 }
 
-/* Card animation delay */
 .card:nth-child(1) { animation-delay: 0.03s; }
 .card:nth-child(2) { animation-delay: 0.06s; }
 .card:nth-child(3) { animation-delay: 0.09s; }
@@ -365,7 +362,6 @@ body {
     word-break: break-word;
 }
 
-/* Ẩn mô tả và tag để tiết kiệm diện tích */
 .card .card-desc,
 .card .card-tag {
     display: none;
@@ -553,7 +549,6 @@ body {
     background: #cbd5e1;
 }
 
-/* Focus outline cho các nút */
 .btn:focus-visible,
 .mode-btn:focus-visible,
 .tab-btn:focus-visible {
