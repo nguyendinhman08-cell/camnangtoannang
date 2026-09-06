@@ -74,15 +74,183 @@ body {
 }
 
 /* ============================================================
-   HEADER
+   HEADER - MÀU XANH DƯƠNG
    ============================================================ */
-.header {
-    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+   .header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #1e40af 40%, #1d4ed8 100%);
     color: var(--text-white);
     padding: 24px 0 16px;
-    border-bottom: 4px solid var(--accent);
+    border-bottom: 4px solid #60a5fa;
     position: relative;
     overflow: hidden;
+}
+
+/* Hiệu ứng nền động cho header */
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
+    animation: headerGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes headerGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-20%, 10%) scale(1.2); }
+}
+
+.header .container {
+    position: relative;
+    z-index: 1;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform var(--transition);
+    overflow: hidden;
+}
+
+.logo-icon img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.logo-icon:hover {
+    transform: rotate(-8deg) scale(1.05);
+}
+
+.logo-text h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text .badge {
+    background: #60a5fa;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-top: 2px;
+    box-shadow: 0 2px 10px rgba(96, 165, 250, 0.3);
+}
+
+.header-social {
+    display: flex;
+    gap: 10px;
+}
+
+.social-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+    transition: all var(--transition);
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    margin-top: 8px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.subtitle i {
+    color: #93c5fd;
+    margin-right: 6px;
+}
+
+/* ============================================================
+   WELCOME SECTION
+   ============================================================ */
+.welcome-section {
+    margin-top: 14px;
+    padding: 14px 22px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    border-left: 4px solid #60a5fa;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.welcome-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-white);
+    font-weight: 400;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #60a5fa;
+    margin-left: 2px;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.highlight-welcome {
+    color: #93c5fd;
+    font-weight: 600;
 }
 
 /* Hiệu ứng nền động cho header */
