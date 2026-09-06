@@ -73,7 +73,7 @@ const categories = {
 };
 
 // ============================================================
-// RENDER TAB (HIỂN THỊ DẠNG LƯỚI THU GỌN)
+// RENDER TAB (HIỂN THỊ HÀNG NGANG)
 // ============================================================
 function renderTab(tabId) {
     const container = document.getElementById('tabContent');
@@ -87,7 +87,6 @@ function renderTab(tabId) {
 
     if (category.isCalculator) {
         container.innerHTML = renderCalculator();
-        // Gán lại sự kiện Enter sau khi render calculator
         attachCalculatorEvents();
         return;
     }
@@ -235,7 +234,7 @@ window.switchMode = function(mode) {
 };
 
 // ============================================================
-// TÍNH TOÁN CHUYỂN CELL - DEC (KHÔNG DẤU NGĂN CÁCH)
+// TÍNH TOÁN CHUYỂN CELL - DEC (BỎ DẤU NGĂN CÁCH)
 // ============================================================
 window.calculate = function() {
     const input = document.getElementById('inputX');
@@ -298,7 +297,7 @@ window.clearResult = function() {
 };
 
 // ============================================================
-// HEX → DEC (KHÔNG DẤU NGĂN CÁCH)
+// HEX → DEC (BỎ DẤU NGĂN CÁCH)
 // ============================================================
 window.convertHexToDec = function() {
     const input = document.getElementById('inputHex');
