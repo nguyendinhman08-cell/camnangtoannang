@@ -359,12 +359,12 @@ window.buildKML = function() {
   <Document>
     <name>Lộ trình của tôi</name>
     
-    <!-- Style cho điểm - CHẤM TRÒN ĐỎ -->
+    <!-- Style cho điểm - CHẤM TRÒN ĐỎ (dùng icon chuẩn của Google) -->
     <Style id="waypointStyle">
       <IconStyle>
-        <scale>1.2</scale>
+        <scale>0.8</scale>
         <Icon>
-          <href>http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png</href>
+          <href>https://www.google.com/mapfiles/ms/icons/red-dot.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
