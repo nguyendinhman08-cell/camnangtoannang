@@ -262,7 +262,7 @@ function renderRoute() {
                 <div class="route-header">
                     <span class="route-icon">📍</span>
                     <h2>Lộ trình di chuyển</h2>
-                    <p class="route-desc">Nhập các điểm đến, sau đó xem trên Google Maps</p>
+                    <p class="route-desc">Nhập các điểm đến, sau đó xem trên Google Earth</p>
                 </div>
 
                 <div class="route-form">
@@ -288,8 +288,8 @@ function renderRoute() {
                 </div>
 
                 <div class="route-actions">
-                    <button class="btn btn-primary" onclick="buildRoute()" ${points.length < 2 ? 'disabled' : ''}>
-                        🗺️ Xem lộ trình trên Google Maps
+                    <button class="btn btn-primary" onclick="buildKML()" ${points.length < 2 ? 'disabled' : ''}>
+                        🌍 Xem trên Google Earth
                     </button>
                     <button class="btn btn-secondary" onclick="clearAllRoutePoints()">🗑️ Xóa tất cả</button>
                 </div>
@@ -344,34 +344,91 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// XÂY DỰNG HÀNH TRÌNH TRÊN GOOGLE MAPS (MỞ TAB MỚI)
+// TẠO FILE KML VÀ MỞ TRONG GOOGLE EARTH
 // ============================================================
-window.buildRoute = function() {
+window.buildKML = function() {
     const points = getRoutePoints();
     if (points.length < 2) {
         alert('⚠️ Cần ít nhất 2 điểm để tạo lộ trình!');
         return;
     }
 
-    // Lấy điểm đầu và điểm cuối
-    const origin = `${points[0].lat},${points[0].lng}`;
-    const destination = `${points[points.length - 1].lat},${points[points.length - 1].lng}`;
+    // Tạo nội dung KML
+    let kml = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Lộ trình của tôi</name>
+    <Style id="waypointStyle">
+      <IconStyle>
+        <scale>1.2</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <color>ff000000</color>
+        <scale>1.0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="lineStyle">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>4</width>
+      </LineStyle>
+    </Style>`;
 
-    // Lấy các điểm trung gian (waypoints)
-    let waypoints = [];
-    if (points.length > 2) {
-        waypoints = points.slice(1, -1).map(p => `${p.lat},${p.lng}`);
-    }
+    // Thêm từng điểm với STT và ghi chú
+    points.forEach((p, index) => {
+        const stt = index + 1;
+        const label = p.note ? `${stt}. ${p.note}` : `Điểm ${stt}`;
+        kml += `
+    <Placemark>
+      <name>${label}</name>
+      <styleUrl>#waypointStyle</styleUrl>
+      <Point>
+        <coordinates>${p.lng},${p.lat},0</coordinates>
+      </Point>
+    </Placemark>`;
+    });
 
-    // Tạo URL Google Maps
-    let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
-    if (waypoints.length > 0) {
-        url += `&waypoints=${waypoints.join('|')}`;
-    }
-    url += '&travelmode=driving';
+    // Thêm đường thẳng nối các điểm (LineString)
+    kml += `
+    <Placemark>
+      <name>Đường chim bay</name>
+      <styleUrl>#lineStyle</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>`;
+    
+    points.forEach(p => {
+        kml += `
+          ${p.lng},${p.lat},0`;
+    });
 
-    // Mở tab mới
-    window.open(url, '_blank');
+    kml += `
+        </coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>`;
+
+    // Tạo file KML và tải xuống
+    const blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
+    const url = URL.createObjectURL(blob);
+    
+    // Tạo link tải file
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `lo_trinh_${new Date().toISOString().slice(0,10)}.kml`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Giải phóng URL
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    
+    // Hướng dẫn người dùng mở file
+    alert('✅ Đã tạo file KML! Vui lòng mở file vừa tải xuống bằng Google Earth để xem lộ trình.\n\n📌 File sẽ có tên: lo_trinh_YYYY-MM-DD.kml');
 };
 
 // ============================================================
