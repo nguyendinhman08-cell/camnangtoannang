@@ -262,7 +262,7 @@ function renderRoute() {
                 <div class="route-header">
                     <span class="route-icon">📍</span>
                     <h2>Lộ trình di chuyển</h2>
-                    <p class="route-desc">Nhập các điểm đến, sau đó xem trên bản đồ OsmAPP</p>
+                    <p class="route-desc">Nhập các điểm đến, sau đó xem trên Google Maps</p>
                 </div>
 
                 <div class="route-form">
@@ -289,7 +289,7 @@ function renderRoute() {
 
                 <div class="route-actions">
                     <button class="btn btn-primary" onclick="buildRoute()" ${points.length < 2 ? 'disabled' : ''}>
-                        🗺️ Xem lộ trình trên OsmAPP
+                        🗺️ Xem lộ trình trên Google Maps
                     </button>
                     <button class="btn btn-secondary" onclick="clearAllRoutePoints()">🗑️ Xóa tất cả</button>
                 </div>
@@ -344,7 +344,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// XÂY DỰNG HÀNH TRÌNH TRÊN OSMAPP (MỞ TAB MỚI)
+// XÂY DỰNG HÀNH TRÌNH TRÊN GOOGLE MAPS (MỞ TAB MỚI)
 // ============================================================
 window.buildRoute = function() {
     const points = getRoutePoints();
@@ -353,13 +353,22 @@ window.buildRoute = function() {
         return;
     }
 
-    // Tạo danh sách các điểm cách nhau bằng dấu gạch ngang
-    // Định dạng: lat,lng~lat,lng~lat,lng
-    const routePoints = points.map(p => `${p.lat},${p.lng}`).join('~');
-    
-    // Tạo URL đến OsmAPP theo đúng định dạng
-    // Sử dụng tham số "route" với danh sách điểm cách nhau bằng ~
-    const url = `https://osmapp.org/directions?route=${routePoints}&type=car`;
+    // Lấy điểm đầu và điểm cuối
+    const origin = `${points[0].lat},${points[0].lng}`;
+    const destination = `${points[points.length - 1].lat},${points[points.length - 1].lng}`;
+
+    // Lấy các điểm trung gian (waypoints)
+    let waypoints = [];
+    if (points.length > 2) {
+        waypoints = points.slice(1, -1).map(p => `${p.lat},${p.lng}`);
+    }
+
+    // Tạo URL Google Maps
+    let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
+    if (waypoints.length > 0) {
+        url += `&waypoints=${waypoints.join('|')}`;
+    }
+    url += '&travelmode=driving';
 
     // Mở tab mới
     window.open(url, '_blank');
