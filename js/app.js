@@ -350,7 +350,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (DÙNG CARTODB)
+// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (BẢN ĐẸP)
 // ============================================================
 let map = null;
 let polylineLayer = null;
@@ -379,9 +379,9 @@ function initRouteMap() {
             zoomControl: true,
         });
 
-        // ===== DÙNG CARTODB - ỔN ĐỊNH NHẤT =====
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap, CartoDB',
+        // ===== DÙNG STAMEN TONER - ĐẸP, ÍT WATERMARK =====
+        L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap, Stamen Design',
             maxZoom: 19,
             subdomains: 'abcd',
         }).addTo(map);
@@ -414,7 +414,7 @@ function initRouteMap() {
 }
 
 // ============================================================
-// CẬP NHẬT LỘ TRÌNH TRÊN MAP
+// CẬP NHẬT LỘ TRÌNH TRÊN MAP - LABEL LUÔN HIỂN THỊ
 // ============================================================
 window.updateRouteMap = function() {
     const points = getRoutePoints();
@@ -438,35 +438,65 @@ window.updateRouteMap = function() {
         return;
     }
 
-    // Tạo marker cho từng điểm với label STT
+    // Tạo marker cho từng điểm với label LUÔN HIỂN THỊ
     points.forEach((p, index) => {
         const stt = index + 1;
         
+        // ICON HÌNH TRÒN VỚI STT
         const icon = L.divIcon({
             className: 'marker-label',
             html: `<div style="
                 font-family: 'Times New Roman', Times, serif !important;
-                font-size: 13px !important;
+                font-size: 14px !important;
                 color: #ffffff !important;
                 font-weight: bold !important;
-                background: #3b82f6;
+                background: #2563eb;
                 border-radius: 50%;
-                width: 32px;
-                height: 32px;
+                width: 36px;
+                height: 36px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 2px solid #000000;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+                border: 2.5px solid #000000;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.5);
                 line-height: 1;
             ">${stt}</div>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
+            iconSize: [36, 36],
+            iconAnchor: [18, 18],
         });
 
-        const marker = L.marker([p.lat, p.lng], { icon })
-            .bindPopup(`<b>${p.note || `Điểm ${stt}`}</b><br>📍 ${p.lat}, ${p.lng}`)
-            .addTo(markerLayer);
+        // Marker chính
+        L.marker([p.lat, p.lng], { 
+            icon: icon,
+        }).addTo(markerLayer);
+
+        // LABEL TEXT BÊN DƯỚI (LUÔN HIỂN THỊ)
+        const labelText = p.note || `Điểm ${stt}`;
+        const labelIcon = L.divIcon({
+            className: 'marker-label-text',
+            html: `<div style="
+                font-family: 'Times New Roman', Times, serif !important;
+                font-size: 13px !important;
+                color: #000000 !important;
+                font-weight: bold !important;
+                background: rgba(255,255,255,0.9);
+                padding: 3px 10px;
+                border-radius: 4px;
+                border: 1.5px solid #000000;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+                white-space: nowrap;
+                text-align: center;
+                margin-top: 6px;
+            ">${labelText}</div>`,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0],
+        });
+
+        // Thêm label text bên dưới marker
+        L.marker([p.lat - 0.001, p.lng], { 
+            icon: labelIcon,
+            interactive: false,
+        }).addTo(markerLayer);
     });
 
     // Vẽ polyline nối các điểm
@@ -480,7 +510,7 @@ window.updateRouteMap = function() {
         }).addTo(polylineLayer);
 
         const bounds = L.latLngBounds(latlngs);
-        map.fitBounds(bounds, { padding: [50, 50] });
+        map.fitBounds(bounds, { padding: [80, 80] });
         console.log('✅ Vẽ polyline thành công');
     } else {
         map.setView([points[0].lat, points[0].lng], 15);
