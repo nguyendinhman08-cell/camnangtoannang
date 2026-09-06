@@ -11,9 +11,9 @@ const categories = {
         icon: '🛠️',
         name: 'Công cụ',
         items: [
-            { icon: '📄', title: 'iLovePDF', desc: 'Chuyển đổi, chỉnh sửa PDF online', url: 'https://www.ilovepdf.com/', tag: 'PDF' },
-            { icon: '🖼️', title: 'PNGTree', desc: 'Kho icon, vector, ảnh nền', url: 'https://vi.pngtree.com/', tag: 'Design' },
-            { icon: '🔄', title: 'Convertio', desc: 'Chuyển đổi file đa định dạng', url: 'https://convertio.co/vn/', tag: 'Converter' }
+            { icon: '📄', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
+            { icon: '🖼️', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
+            { icon: '🔄', title: 'Convertio', url: 'https://convertio.co/vn/' }
         ]
     },
 
@@ -22,9 +22,9 @@ const categories = {
         icon: '🤖',
         name: 'AI Phổ thông',
         items: [
-            { icon: '🧠', title: 'ChatGPT', desc: 'Trợ lý AI đa năng của OpenAI', url: 'https://chatgpt.com/', tag: 'Phổ biến' },
-            { icon: '✨', title: 'Gemini', desc: 'Trợ lý AI của Google', url: 'https://gemini.google.com/app', tag: 'Google' },
-            { icon: '📓', title: 'NotebookLM', desc: 'Công cụ nghiên cứu & ghi chú AI', url: 'https://notebook.google.com/', tag: 'Nghiên cứu' }
+            { icon: '🧠', title: 'ChatGPT', url: 'https://chatgpt.com/' },
+            { icon: '✨', title: 'Gemini', url: 'https://gemini.google.com/app' },
+            { icon: '📓', title: 'NotebookLM', url: 'https://notebook.google.com/' }
         ]
     },
 
@@ -33,10 +33,10 @@ const categories = {
         icon: '🛠️',
         name: 'AI Tiện ích',
         items: [
-            { icon: '🧘', title: 'Ông Lão Tử', desc: 'GPT tư vấn triết lý, lối sống', url: 'https://chatgpt.com/g/g-68d6b31640ec8191b945e7a0d7e876b0-ong-lao-tu', tag: 'Tư vấn' },
-            { icon: '📚', title: 'AI Học Trí Tuệ', desc: 'Hỗ trợ học tập, nghiên cứu', url: 'https://chatgpt.com/g/g-9yBS1MigT-ai-hoc-tri-tue', tag: 'Học tập' },
-            { icon: '🌍', title: 'Học Ngoại Ngữ', desc: 'Hỗ trợ tiếng Anh, Trung, Nhật, Hàn', url: 'https://chatgpt.com/g/g-67d79e355a948191a84e2d1b589d6a7d-hoc-ngoai-ngu-tieng-anh-trung-nhat-han', tag: 'Ngôn ngữ' },
-            { icon: '✍️', title: 'Trợ lý Viết Bài MXH', desc: 'Hỗ trợ viết bài mạng xã hội', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo', tag: 'Content' }
+            { icon: '🧘', title: 'Ông Lão Tử', url: 'https://chatgpt.com/g/g-68d6b31640ec8191b945e7a0d7e876b0-ong-lao-tu' },
+            { icon: '📚', title: 'AI Học Trí Tuệ', url: 'https://chatgpt.com/g/g-9yBS1MigT-ai-hoc-tri-tue' },
+            { icon: '🌍', title: 'Học Ngoại Ngữ', url: 'https://chatgpt.com/g/g-67d79e355a948191a84e2d1b589d6a7d-hoc-ngoai-ngu-tieng-anh-trung-nhat-han' },
+            { icon: '✍️', title: 'Trợ lý Viết Bài MXH', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo' }
         ]
     },
 
@@ -45,11 +45,11 @@ const categories = {
         icon: '📡',
         name: 'Tra cứu',
         items: [
-            { icon: '📱', title: 'IMEI.info', desc: 'Tra cứu IMEI, bảo hành, blacklist', url: 'https://www.imei.info/', tag: 'IMEI' },
-            { icon: '🔍', title: 'IMEICheck', desc: 'Check IMEI miễn phí, hỗ trợ Tiếng Việt', url: 'https://imeicheck.com/vi/kiem-tra-imei', tag: 'IMEI' },
-            { icon: '🗺️', title: 'MultiCellID', desc: 'Hiển thị vị trí Cell ID trên bản đồ', url: 'https://www.multicellid.com/dangnhap.php', tag: 'Vị trí' },
-            { icon: '📍', title: 'FindCellID', desc: 'Tra cứu vị trí trạm BTS', url: 'https://findcellid.com/', tag: 'Vị trí' },
-            { icon: '📶', title: 'CellID.co', desc: 'Công cụ tra cứu Cell ID', url: 'https://cellid.co/cell', tag: 'Vị trí' }
+            { icon: '📱', title: 'IMEI.info', url: 'https://www.imei.info/' },
+            { icon: '🔍', title: 'IMEICheck', url: 'https://imeicheck.com/vi/kiem-tra-imei' },
+            { icon: '🗺️', title: 'MultiCellID', url: 'https://www.multicellid.com/dangnhap.php' },
+            { icon: '📍', title: 'FindCellID', url: 'https://findcellid.com/' },
+            { icon: '📶', title: 'CellID.co', url: 'https://cellid.co/cell' }
         ]
     },
 
@@ -58,9 +58,9 @@ const categories = {
         icon: '⚡',
         name: 'Tiện ích',
         items: [
-            { icon: '🎬', title: 'YouTube', desc: 'Xem video, học tập, giải trí', url: 'https://www.youtube.com', tag: 'Giải trí' },
-            { icon: '🌤️', title: 'Thời tiết NB', desc: 'Dự báo thời tiết Ninh Bình', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh', tag: 'Thời tiết' },
-            { icon: '🌙', title: 'Lịch âm', desc: 'Xem lịch âm dương, ngày tốt xấu', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m', tag: 'Lịch' }
+            { icon: '🎬', title: 'YouTube', url: 'https://www.youtube.com' },
+            { icon: '🌤️', title: 'Thời tiết NB', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh' },
+            { icon: '🌙', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' }
         ]
     },
 
@@ -73,7 +73,7 @@ const categories = {
 };
 
 // ============================================================
-// RENDER TAB
+// RENDER TAB (HIỂN THỊ DẠNG LƯỚI THU GỌN)
 // ============================================================
 function renderTab(tabId) {
     const container = document.getElementById('tabContent');
@@ -103,8 +103,6 @@ function renderTab(tabId) {
                         <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card">
                             <span class="card-icon">${item.icon}</span>
                             <span class="card-title">${item.title}</span>
-                            <span class="card-desc">${item.desc}</span>
-                            <span class="card-tag">${item.tag}</span>
                         </a>
                     `).join('')}
                 </div>
@@ -128,7 +126,7 @@ function renderCalculator() {
 
                 <div class="calc-mode-selector">
                     <button class="mode-btn active" data-mode="formula" onclick="switchMode('formula')">
-                        📐 Công thức VBA
+                        📐 Chuyển Cell - Dec
                     </button>
                     <button class="mode-btn" data-mode="hex" onclick="switchMode('hex')">
                         🔢 Hex → Dec
@@ -150,25 +148,20 @@ function renderCalculator() {
                             <div class="result-card">
                                 <div class="result-label">📊 KQ1</div>
                                 <div class="result-value" id="result1">0</div>
-                                <div class="result-formula">b × 65536 + a</div>
                             </div>
                             <div class="result-card">
                                 <div class="result-label">📊 KQ2</div>
                                 <div class="result-value" id="result2">0</div>
-                                <div class="result-formula">b × 1048576 + a</div>
                             </div>
                             <div class="result-card">
                                 <div class="result-label">📊 KQ3</div>
                                 <div class="result-value" id="result3">0</div>
-                                <div class="result-formula">b × 65536 + a</div>
                             </div>
                             <div class="result-card">
                                 <div class="result-label">📊 KQ4</div>
                                 <div class="result-value" id="result4">0</div>
-                                <div class="result-formula">b × 1048576 + a</div>
                             </div>
                         </div>
-                        <div class="calc-detail" id="detailInfo"></div>
                     </div>
                 </div>
 
@@ -191,12 +184,10 @@ function renderCalculator() {
                             <div class="result-card">
                                 <div class="result-label">📊 Thập phân (Decimal)</div>
                                 <div class="result-value" id="decResult">0</div>
-                                <div class="result-formula">Kết quả chuyển đổi</div>
                             </div>
                             <div class="result-card">
                                 <div class="result-label">📊 Nhị phân (Binary)</div>
                                 <div class="result-value" id="binResult" style="font-size:18px;">0</div>
-                                <div class="result-formula">Dạng nhị phân</div>
                             </div>
                         </div>
                         <div class="calc-detail" id="hexDetailInfo"></div>
@@ -220,7 +211,7 @@ window.switchMode = function(mode) {
 };
 
 // ============================================================
-// TÍNH TOÁN FORMULA
+// TÍNH TOÁN CHUYỂN CELL - DEC
 // ============================================================
 window.calculate = function() {
     const input = document.getElementById('inputX');
@@ -256,17 +247,6 @@ window.calculate = function() {
     document.getElementById('result2').textContent = kq2.toLocaleString();
     document.getElementById('result3').textContent = kq3.toLocaleString();
     document.getElementById('result4').textContent = kq4.toLocaleString();
-
-    document.getElementById('detailInfo').innerHTML = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
-            <div><strong>📥 X =</strong> ${X}</div>
-            <div><strong>🔢 Độ dài =</strong> ${X.length} chữ số</div>
-            <div><strong>KQ1:</strong> ${b1} × 65536 + ${a1} = ${kq1.toLocaleString()}</div>
-            <div><strong>KQ2:</strong> ${b2} × 1048576 + ${a2} = ${kq2.toLocaleString()}</div>
-            <div><strong>KQ3:</strong> ${b1} × 65536 + ${a1} = ${kq3.toLocaleString()}</div>
-            <div><strong>KQ4:</strong> ${b4} × 1048576 + ${a4} = ${kq4.toLocaleString()}</div>
-        </div>
-    `;
 
     document.getElementById('resultContainer').style.display = 'block';
 };
@@ -325,7 +305,6 @@ window.clearHexResult = function() {
 // HIỆU ỨNG TYPING EFFECT
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Typing effect cho welcome
     const fullText = `👋 Chào mừng bạn đến với Cẩm nang toàn năng – Nơi hội tụ công cụ, AI và tri thức. ✨ Chúc bạn một ngày sáng tạo và hiệu quả!`;
     const welcomeElement = document.getElementById('welcomeText');
     let charIndex = 0;
@@ -337,7 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let displayChar = fullText[charIndex];
             
-            // Highlight từ "Cẩm nang toàn năng"
             if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
                 displayChar = `<span class="highlight-welcome">${displayChar}`;
                 if (charIndex + 1 < fullText.length && 
