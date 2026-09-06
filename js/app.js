@@ -358,11 +358,13 @@ window.buildKML = function() {
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
     <name>Lộ trình của tôi</name>
+    
+    <!-- Style cho điểm - CHẤM TRÒN -->
     <Style id="waypointStyle">
       <IconStyle>
-        <scale>1.2</scale>
+        <scale>1.0</scale>
         <Icon>
-          <href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+          <href>http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -370,6 +372,8 @@ window.buildKML = function() {
         <scale>1.0</scale>
       </LabelStyle>
     </Style>
+    
+    <!-- Style cho đường thẳng -->
     <Style id="lineStyle">
       <LineStyle>
         <color>ff0000ff</color>
@@ -377,10 +381,11 @@ window.buildKML = function() {
       </LineStyle>
     </Style>`;
 
-    // Thêm từng điểm với STT và ghi chú
+    // Thêm từng điểm - CHỈ HIỂN THỊ STT nếu không có ghi chú
     points.forEach((p, index) => {
         const stt = index + 1;
-        const label = p.note ? `${stt}. ${p.note}` : `Điểm ${stt}`;
+        // Nếu có ghi chú: "STT. Ghi chú", nếu không: chỉ "STT"
+        const label = p.note && p.note.trim() !== '' ? `${stt}. ${p.note}` : `${stt}`;
         kml += `
     <Placemark>
       <name>${label}</name>
