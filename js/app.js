@@ -344,7 +344,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// TẠO FILE KML - ICON CHẤM TRÒN ĐEN (DÙNG SVG)
+// TẠO FILE KML - ICON CHẤM TRÒN (DÙNG ICON CHUẨN)
 // ============================================================
 window.buildKML = function() {
     const points = getRoutePoints();
@@ -359,13 +359,14 @@ window.buildKML = function() {
   <Document>
     <name>Lộ trình của tôi</name>
     
-    <!-- Style cho điểm - CHẤM TRÒN ĐEN (dùng SVG) -->
+    <!-- Style cho điểm - DÙNG ICON CHUẨN CỦA GOOGLE -->
     <Style id="waypointStyle">
       <IconStyle>
-        <scale>1.2</scale>
+        <scale>1.0</scale>
         <Icon>
-          <href>data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'&gt;&lt;circle cx='16' cy='16' r='12' fill='%23000000' stroke='%23ffffff' stroke-width='2'/&gt;&lt;/svg&gt;</href>
+          <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
         </Icon>
+        <color>ff000000</color>
       </IconStyle>
       <LabelStyle>
         <color>ff000000</color>
