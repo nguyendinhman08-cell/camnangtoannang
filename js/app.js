@@ -265,14 +265,14 @@ function renderRoute() {
                 <div class="route-header">
                     <span class="route-icon">📍</span>
                     <h2>Lộ trình di chuyển</h2>
-                    <p class="route-desc">Nhập các điểm đến, xem hành trình trên bản đồ OSM</p>
+                    <p class="route-desc">Nhập các điểm đến, xem hành trình trên bản đồ</p>
                 </div>
 
                 <div class="route-form">
                     <div class="route-inputs">
                         <input type="text" id="routeLat" placeholder="Vĩ độ (VD: 21.0285)" />
                         <input type="text" id="routeLng" placeholder="Kinh độ (VD: 105.8542)" />
-                        <input type="text" id="routeNote" placeholder="Ghi chú (VD: Hà Nội - 8:00)" />
+                        <input type="text" id="routeNote" placeholder="Ghi chú (tùy chọn)" />
                         <button class="btn btn-primary" onclick="addRoutePoint()">➕ Thêm điểm</button>
                     </div>
                 </div>
@@ -283,7 +283,7 @@ function renderRoute() {
                         ${points.map((p, index) => `
                             <li class="route-point" data-index="${index}">
                                 <span class="route-stt">${index + 1}</span>
-                                <span class="route-note">${p.note || `Điểm ${index + 1}`}</span>
+                                <span class="route-note">${p.note || ''}</span>
                                 <button class="btn-remove" onclick="removeRoutePoint(${index})">✕</button>
                             </li>
                         `).join('')}
@@ -324,13 +324,13 @@ window.addRoutePoint = function() {
     const noteInput = document.getElementById('routeNote');
     const lat = parseFloat(latInput.value.trim());
     const lng = parseFloat(lngInput.value.trim());
-    const note = noteInput.value.trim() || `Điểm ${getRoutePoints().length + 1}`;
+    const note = noteInput.value.trim(); // KHÔNG TỰ ĐỘNG THÊM GHI CHÚ
 
     if (isNaN(lat) || isNaN(lng)) { alert('⚠️ Vui lòng nhập đúng vĩ độ và kinh độ!'); return; }
     if (lat < -90 || lat > 90 || lng < -180 || lng > 180) { alert('⚠️ Vĩ độ từ -90 đến 90, kinh độ từ -180 đến 180!'); return; }
 
     const points = getRoutePoints();
-    points.push({ lat, lng, note });
+    points.push({ lat, lng, note }); // note có thể là rỗng
     saveRoutePoints(points);
     renderRouteTab();
 };
@@ -350,7 +350,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (BẢN ĐẸP)
+// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (DÙNG TILE ỔN ĐỊNH)
 // ============================================================
 let map = null;
 let polylineLayer = null;
@@ -379,12 +379,22 @@ function initRouteMap() {
             zoomControl: true,
         });
 
-        // ===== DÙNG STAMEN TONER - ĐẸP, ÍT WATERMARK =====
+        // ===== DÙNG TILE SERVER ỔN ĐỊNH NHẤT =====
+        // CartoDB Voyager (đẹp, ổn định)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap, CartoDB',
+            maxZoom: 19,
+            subdomains: 'abcd',
+        }).addTo(map);
+
+        // ===== DỰ PHÒNG: NẾU CARTO LỖI, DÙNG STAMEN =====
+        /*
         L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap, Stamen Design',
             maxZoom: 19,
             subdomains: 'abcd',
         }).addTo(map);
+        */
 
         polylineLayer = L.layerGroup().addTo(map);
         markerLayer = L.layerGroup().addTo(map);
@@ -409,7 +419,7 @@ function initRouteMap() {
 
     } catch (error) {
         console.error('❌ Lỗi khởi tạo map:', error);
-        container.innerHTML = '<p style="color:red;padding:20px;text-align:center;">❌ Lỗi tải bản đồ. Vui lòng kiểm tra kết nối mạng.</p>';
+        container.innerHTML = '<p style="color:red;padding:20px;text-align:center;">❌ Lỗi tải bản đồ. Vui lòng kiểm tra kết nối mạng hoặc thử lại sau.</p>';
     }
 }
 
@@ -438,11 +448,11 @@ window.updateRouteMap = function() {
         return;
     }
 
-    // Tạo marker cho từng điểm với label LUÔN HIỂN THỊ
+    // Tạo marker cho từng điểm với STT LUÔN HIỂN THỊ
     points.forEach((p, index) => {
         const stt = index + 1;
         
-        // ICON HÌNH TRÒN VỚI STT
+        // ICON HÌNH TRÒN VỚI STT (LUÔN HIỂN THỊ)
         const icon = L.divIcon({
             className: 'marker-label',
             html: `<div style="
@@ -452,51 +462,52 @@ window.updateRouteMap = function() {
                 font-weight: bold !important;
                 background: #2563eb;
                 border-radius: 50%;
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border: 2.5px solid #000000;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
                 line-height: 1;
             ">${stt}</div>`,
-            iconSize: [36, 36],
-            iconAnchor: [18, 18],
+            iconSize: [34, 34],
+            iconAnchor: [17, 17],
         });
 
-        // Marker chính
+        // Marker chính với STT
         L.marker([p.lat, p.lng], { 
             icon: icon,
         }).addTo(markerLayer);
 
-        // LABEL TEXT BÊN DƯỚI (LUÔN HIỂN THỊ)
-        const labelText = p.note || `Điểm ${stt}`;
-        const labelIcon = L.divIcon({
-            className: 'marker-label-text',
-            html: `<div style="
-                font-family: 'Times New Roman', Times, serif !important;
-                font-size: 13px !important;
-                color: #000000 !important;
-                font-weight: bold !important;
-                background: rgba(255,255,255,0.9);
-                padding: 3px 10px;
-                border-radius: 4px;
-                border: 1.5px solid #000000;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-                white-space: nowrap;
-                text-align: center;
-                margin-top: 6px;
-            ">${labelText}</div>`,
-            iconSize: [0, 0],
-            iconAnchor: [0, 0],
-        });
+        // CHỈ HIỂN THỊ GHI CHÚ NẾU CÓ NỘI DUNG
+        if (p.note && p.note.trim() !== '') {
+            const labelIcon = L.divIcon({
+                className: 'marker-label-text',
+                html: `<div style="
+                    font-family: 'Times New Roman', Times, serif !important;
+                    font-size: 13px !important;
+                    color: #000000 !important;
+                    font-weight: bold !important;
+                    background: rgba(255,255,255,0.92);
+                    padding: 3px 10px;
+                    border-radius: 4px;
+                    border: 1.5px solid #000000;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                    white-space: nowrap;
+                    text-align: center;
+                    margin-top: 6px;
+                ">${p.note}</div>`,
+                iconSize: [0, 0],
+                iconAnchor: [0, 0],
+            });
 
-        // Thêm label text bên dưới marker
-        L.marker([p.lat - 0.001, p.lng], { 
-            icon: labelIcon,
-            interactive: false,
-        }).addTo(markerLayer);
+            // Thêm ghi chú bên dưới marker (nếu có)
+            L.marker([p.lat - 0.001, p.lng], { 
+                icon: labelIcon,
+                interactive: false,
+            }).addTo(markerLayer);
+        }
     });
 
     // Vẽ polyline nối các điểm
@@ -510,7 +521,7 @@ window.updateRouteMap = function() {
         }).addTo(polylineLayer);
 
         const bounds = L.latLngBounds(latlngs);
-        map.fitBounds(bounds, { padding: [80, 80] });
+        map.fitBounds(bounds, { padding: [60, 60] });
         console.log('✅ Vẽ polyline thành công');
     } else {
         map.setView([points[0].lat, points[0].lng], 15);
