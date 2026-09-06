@@ -86,8 +86,9 @@ function renderTab(tabId) {
 
     if (category.isRoute) {
         container.innerHTML = renderRoute();
-        // Khởi tạo map sau khi render
-        setTimeout(() => initRouteMap(), 300);
+        setTimeout(() => {
+            initRouteMap();
+        }, 500);
         return;
     }
 
@@ -314,7 +315,7 @@ function saveRoutePoints(points) {
 function renderRouteTab() {
     const container = document.getElementById('tabContent');
     container.innerHTML = renderRoute();
-    setTimeout(() => initRouteMap(), 300);
+    setTimeout(() => initRouteMap(), 500);
 }
 
 window.addRoutePoint = function() {
@@ -349,40 +350,67 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH
+// LEAFLET MAP - KHỞI TẠO & VẼ LỘ TRÌNH (DÙNG CARTODB)
 // ============================================================
-let map, polylineLayer, markerLayer;
+let map = null;
+let polylineLayer = null;
+let markerLayer = null;
 
 function initRouteMap() {
     const container = document.getElementById('mapContainer');
-    if (!container) return;
+    if (!container) {
+        console.log('❌ Không tìm thấy mapContainer');
+        return;
+    }
+
     if (map) {
+        console.log('🔄 Map đã tồn tại');
         map.invalidateSize();
         updateRouteMap();
         return;
     }
 
-    // Khởi tạo map với tile OSM
-    map = L.map('mapContainer', {
-        center: [21.0285, 105.8542],
-        zoom: 13,
-        zoomControl: true,
-    });
+    console.log('🗺️ Đang khởi tạo map...');
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19,
-    }).addTo(map);
+    try {
+        map = L.map('mapContainer', {
+            center: [21.0285, 105.8542],
+            zoom: 13,
+            zoomControl: true,
+        });
 
-    // Layers
-    polylineLayer = L.layerGroup().addTo(map);
-    markerLayer = L.layerGroup().addTo(map);
+        // ===== DÙNG CARTODB - ỔN ĐỊNH NHẤT =====
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap, CartoDB',
+            maxZoom: 19,
+            subdomains: 'abcd',
+        }).addTo(map);
 
-    // Vẽ route nếu có điểm
-    updateRouteMap();
+        polylineLayer = L.layerGroup().addTo(map);
+        markerLayer = L.layerGroup().addTo(map);
 
-    // Resize map khi tab được hiển thị
-    setTimeout(() => map.invalidateSize(), 500);
+        console.log('✅ Map khởi tạo thành công');
+
+        updateRouteMap();
+
+        setTimeout(() => {
+            if (map) {
+                map.invalidateSize();
+                console.log('🔄 Resize map sau 300ms');
+            }
+        }, 300);
+
+        setTimeout(() => {
+            if (map) {
+                map.invalidateSize();
+                console.log('🔄 Resize map sau 800ms');
+            }
+        }, 800);
+
+    } catch (error) {
+        console.error('❌ Lỗi khởi tạo map:', error);
+        container.innerHTML = '<p style="color:red;padding:20px;text-align:center;">❌ Lỗi tải bản đồ. Vui lòng kiểm tra kết nối mạng.</p>';
+    }
 }
 
 // ============================================================
@@ -390,65 +418,71 @@ function initRouteMap() {
 // ============================================================
 window.updateRouteMap = function() {
     const points = getRoutePoints();
-    if (!map) return;
+    
+    if (!map) {
+        console.log('❌ Map chưa khởi tạo, thử khởi tạo lại...');
+        initRouteMap();
+        return;
+    }
 
-    // Xóa layer cũ
+    if (!polylineLayer || !markerLayer) {
+        polylineLayer = L.layerGroup().addTo(map);
+        markerLayer = L.layerGroup().addTo(map);
+    }
+
     polylineLayer.clearLayers();
     markerLayer.clearLayers();
 
     if (points.length === 0) {
-        // Không có điểm, đưa về vị trí mặc định
         map.setView([21.0285, 105.8542], 13);
         return;
     }
 
-    // Tạo marker cho từng điểm
+    // Tạo marker cho từng điểm với label STT
     points.forEach((p, index) => {
-        const label = index + 1;
+        const stt = index + 1;
+        
         const icon = L.divIcon({
             className: 'marker-label',
             html: `<div style="
                 font-family: 'Times New Roman', Times, serif !important;
                 font-size: 13px !important;
-                color: black !important;
+                color: #ffffff !important;
                 font-weight: bold !important;
-                background: white;
+                background: #3b82f6;
                 border-radius: 50%;
-                width: 30px;
-                height: 30px;
+                width: 32px;
+                height: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 2px solid black;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-                background-color: #3b82f6;
-                color: white !important;
-            ">${label}</div>`,
-            iconSize: [30, 30],
-            iconAnchor: [15, 15],
+                border: 2px solid #000000;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+                line-height: 1;
+            ">${stt}</div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
         });
 
         const marker = L.marker([p.lat, p.lng], { icon })
-            .bindPopup(p.note || `Điểm ${index + 1}`)
+            .bindPopup(`<b>${p.note || `Điểm ${stt}`}</b><br>📍 ${p.lat}, ${p.lng}`)
             .addTo(markerLayer);
     });
 
-    // Vẽ polyline nối các điểm (nếu >= 2)
+    // Vẽ polyline nối các điểm
     if (points.length >= 2) {
         const latlngs = points.map(p => [p.lat, p.lng]);
         const polyline = L.polyline(latlngs, {
-            color: 'black',
+            color: '#000000',
             weight: 5,
             opacity: 1,
-            dashArray: null,
             smoothFactor: 1,
         }).addTo(polylineLayer);
 
-        // Zoom để hiển thị tất cả điểm
         const bounds = L.latLngBounds(latlngs);
         map.fitBounds(bounds, { padding: [50, 50] });
+        console.log('✅ Vẽ polyline thành công');
     } else {
-        // Chỉ có 1 điểm, zoom vào điểm đó
         map.setView([points[0].lat, points[0].lng], 15);
     }
 };
