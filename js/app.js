@@ -344,7 +344,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// TẠO FILE KML - ĐÃ SỬA ICON THÀNH CHẤM TRÒN
+// TẠO FILE KML - ICON CHẤM TRÒN ĐEN, LINE ĐEN
 // ============================================================
 window.buildKML = function() {
     const points = getRoutePoints();
@@ -359,13 +359,13 @@ window.buildKML = function() {
   <Document>
     <name>Lộ trình của tôi</name>
     
-    <!-- Style cho điểm - ICON CHẤM TRÒN MÀU ĐỎ -->
+    <!-- Style cho điểm - CHẤM TRÒN ĐEN -->
     <Style id="waypointStyle">
       <IconStyle>
         <scale>1.0</scale>
         <Icon>
-          <!-- Icon chấm tròn đỏ của Google Maps -->
-          <href>https://www.google.com/intl/en_us/mapfiles/ms/icons/red-dot.png</href>
+          <!-- Icon chấm tròn đen (dùng circle với màu đen) -->
+          <href>https://maps.google.com/mapfiles/kml/pushpin/black-pushpin.png</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
@@ -374,10 +374,24 @@ window.buildKML = function() {
       </LabelStyle>
     </Style>
     
-    <!-- Style cho đường thẳng -->
+    <!-- Style cho điểm - CHẤM TRÒN ĐEN (dùng href khác nếu cần) -->
+    <Style id="waypointStyleCircle">
+      <IconStyle>
+        <scale>0.8</scale>
+        <Icon>
+          <href>https://www.google.com/mapfiles/ms/icons/black-dot.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <color>ff000000</color>
+        <scale>1.0</scale>
+      </LabelStyle>
+    </Style>
+    
+    <!-- Style cho đường thẳng - MÀU ĐEN -->
     <Style id="lineStyle">
       <LineStyle>
-        <color>ff0000ff</color>
+        <color>ff000000</color>
         <width>4</width>
       </LineStyle>
     </Style>`;
@@ -396,7 +410,7 @@ window.buildKML = function() {
     </Placemark>`;
     });
 
-    // Thêm đường thẳng nối các điểm
+    // Thêm đường thẳng nối các điểm - MÀU ĐEN
     kml += `
     <Placemark>
       <name>Đường chim bay</name>
