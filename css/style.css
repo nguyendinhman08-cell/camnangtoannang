@@ -8,8 +8,8 @@
     --accent: #3b82f6;
     --accent-hover: #2563eb;
     --accent-light: #60a5fa;
-    --gradient-start: #0f172a;
-    --gradient-end: #1e1b4b;
+    --gradient-start: #0c4a6e;
+    --gradient-end: #1d4ed8;
     --bg-body: #f0f4f8;
     --bg-card: #ffffff;
     --bg-card-hover: #f8fafc;
@@ -74,18 +74,17 @@ body {
 }
 
 /* ============================================================
-   HEADER - MÀU XANH DƯƠNG
+   HEADER
    ============================================================ */
-   .header {
-    background: linear-gradient(135deg, #0c4a6e 0%, #1e40af 40%, #1d4ed8 100%);
+.header {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, #1e40af 40%, var(--gradient-end) 100%);
     color: var(--text-white);
     padding: 24px 0 16px;
-    border-bottom: 4px solid #60a5fa;
+    border-bottom: 4px solid var(--accent-light);
     position: relative;
     overflow: hidden;
 }
 
-/* Hiệu ứng nền động cho header */
 .header::before {
     content: '';
     position: absolute;
@@ -121,10 +120,11 @@ body {
     gap: 14px;
 }
 
+/* ===== LOGO - KÍCH THƯỚC TO ===== */
 .logo-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(10px);
     display: flex;
@@ -136,18 +136,17 @@ body {
     overflow: hidden;
 }
 
-.logo-icon img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
+.logo-icon i {
+    font-size: 40px;
+    color: white;
 }
 
 .logo-icon:hover {
-    transform: rotate(-8deg) scale(1.05);
+    transform: rotate(-10deg) scale(1.05);
 }
 
 .logo-text h1 {
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 800;
     letter-spacing: -0.5px;
     color: #ffffff;
@@ -155,7 +154,7 @@ body {
 }
 
 .logo-text .badge {
-    background: #60a5fa;
+    background: var(--accent-light);
     color: white;
     font-size: 11px;
     font-weight: 700;
@@ -215,7 +214,7 @@ body {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(12px);
     border-radius: var(--radius);
-    border-left: 4px solid #60a5fa;
+    border-left: 4px solid var(--accent-light);
     min-height: 70px;
     display: flex;
     align-items: center;
@@ -237,7 +236,7 @@ body {
     display: inline-block;
     width: 2px;
     height: 1.2em;
-    background: #60a5fa;
+    background: var(--accent-light);
     margin-left: 2px;
     animation: blink 0.8s step-end infinite;
     vertical-align: text-bottom;
@@ -250,167 +249,6 @@ body {
 
 .highlight-welcome {
     color: #93c5fd;
-    font-weight: 600;
-}
-
-/* Hiệu ứng nền động cho header */
-.header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(ellipse, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-    animation: headerGlow 8s ease-in-out infinite alternate;
-}
-
-@keyframes headerGlow {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-20%, 10%) scale(1.2); }
-}
-
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--accent);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: white;
-    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
-    transition: transform var(--transition);
-}
-
-.logo-icon:hover {
-    transform: rotate(-10deg) scale(1.05);
-}
-
-.logo-text h1 {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #ffffff 60%, var(--accent-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.logo-text .badge {
-    background: var(--accent);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 12px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    -webkit-text-fill-color: white;
-    display: inline-block;
-    margin-top: 2px;
-}
-
-.header-social {
-    display: flex;
-    gap: 10px;
-}
-
-.social-link {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-white);
-    transition: all var(--transition);
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.social-link:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-.subtitle {
-    margin-top: 8px;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.7);
-    position: relative;
-    z-index: 1;
-}
-
-.subtitle i {
-    color: var(--accent-light);
-    margin-right: 6px;
-}
-
-/* ============================================================
-   WELCOME SECTION
-   ============================================================ */
-.welcome-section {
-    margin-top: 14px;
-    padding: 14px 22px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius);
-    border-left: 4px solid var(--accent);
-    min-height: 70px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
-}
-
-.welcome-text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-white);
-    font-weight: 400;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.typing-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background: var(--accent);
-    margin-left: 2px;
-    animation: blink 0.8s step-end infinite;
-    vertical-align: text-bottom;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-.highlight-welcome {
-    color: var(--accent-light);
     font-weight: 600;
 }
 
@@ -530,7 +368,7 @@ body {
 }
 
 /* ============================================================
-   CARD - HÀNG NGANG CUỘN
+   CARD
    ============================================================ */
 .card-grid {
     display: flex !important;
@@ -925,14 +763,14 @@ body {
 .footer-brand {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 16px;
     color: var(--text-primary);
 }
 
 .footer-brand i {
+    font-size: 24px;
     color: var(--accent);
-    font-size: 18px;
 }
 
 .footer-small {
@@ -949,20 +787,18 @@ body {
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-    .header-top {
-        flex-direction: column;
-        align-items: flex-start;
+    .logo-icon {
+        width: 56px;
+        height: 56px;
+    }
+    .logo-icon i {
+        font-size: 30px;
+    }
+    .logo-text h1 {
+        font-size: 24px;
     }
     .header-social {
         align-self: flex-start;
-    }
-    .logo-text h1 {
-        font-size: 22px;
-    }
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
     }
     .card {
         min-width: 90px;
@@ -1024,6 +860,16 @@ body {
 }
 
 @media (max-width: 480px) {
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+    }
+    .logo-icon i {
+        font-size: 24px;
+    }
+    .logo-text h1 {
+        font-size: 20px;
+    }
     .card {
         min-width: 75px;
         max-width: 90px;
@@ -1044,19 +890,14 @@ body {
     .route-container {
         padding: 16px;
     }
-    .logo-text h1 {
-        font-size: 18px;
-    }
-    .logo-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-    }
     .tab-btn {
         font-size: 12px;
         padding: 6px 10px;
     }
     .tab-btn i {
         font-size: 12px;
+    }
+    .welcome-text {
+        font-size: 13px;
     }
 }
