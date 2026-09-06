@@ -344,7 +344,7 @@ window.clearAllRoutePoints = function() {
 };
 
 // ============================================================
-// TẠO FILE KML - ICON CHẤM TRÒN ĐEN, LINE ĐEN
+// TẠO FILE KML - ICON CHẤM TRÒN ĐEN (DÙNG SVG)
 // ============================================================
 window.buildKML = function() {
     const points = getRoutePoints();
@@ -359,27 +359,12 @@ window.buildKML = function() {
   <Document>
     <name>Lộ trình của tôi</name>
     
-    <!-- Style cho điểm - CHẤM TRÒN ĐEN -->
+    <!-- Style cho điểm - CHẤM TRÒN ĐEN (dùng SVG) -->
     <Style id="waypointStyle">
       <IconStyle>
-        <scale>1.0</scale>
+        <scale>1.2</scale>
         <Icon>
-          <!-- Icon chấm tròn đen (dùng circle với màu đen) -->
-          <href>https://maps.google.com/mapfiles/kml/pushpin/black-pushpin.png</href>
-        </Icon>
-      </IconStyle>
-      <LabelStyle>
-        <color>ff000000</color>
-        <scale>1.0</scale>
-      </LabelStyle>
-    </Style>
-    
-    <!-- Style cho điểm - CHẤM TRÒN ĐEN (dùng href khác nếu cần) -->
-    <Style id="waypointStyleCircle">
-      <IconStyle>
-        <scale>0.8</scale>
-        <Icon>
-          <href>https://www.google.com/mapfiles/ms/icons/black-dot.png</href>
+          <href>data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'&gt;&lt;circle cx='16' cy='16' r='12' fill='%23000000' stroke='%23ffffff' stroke-width='2'/&gt;&lt;/svg&gt;</href>
         </Icon>
       </IconStyle>
       <LabelStyle>
