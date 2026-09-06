@@ -87,6 +87,8 @@ function renderTab(tabId) {
 
     if (category.isCalculator) {
         container.innerHTML = renderCalculator();
+        // Gán lại sự kiện Enter sau khi render calculator
+        attachCalculatorEvents();
         return;
     }
 
@@ -199,6 +201,25 @@ function renderCalculator() {
 }
 
 // ============================================================
+// GÁN LẠI SỰ KIỆN CHO CALCULATOR SAU KHI RENDER
+// ============================================================
+function attachCalculatorEvents() {
+    const inputX = document.getElementById('inputX');
+    if (inputX) {
+        inputX.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculate();
+        });
+    }
+
+    const inputHex = document.getElementById('inputHex');
+    if (inputHex) {
+        inputHex.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') convertHexToDec();
+        });
+    }
+}
+
+// ============================================================
 // SWITCH MODE
 // ============================================================
 window.switchMode = function(mode) {
@@ -206,15 +227,20 @@ window.switchMode = function(mode) {
         btn.classList.toggle('active', btn.dataset.mode === mode);
     });
 
-    document.getElementById('formulaMode').style.display = mode === 'formula' ? 'block' : 'none';
-    document.getElementById('hexMode').style.display = mode === 'hex' ? 'block' : 'none';
+    const formulaMode = document.getElementById('formulaMode');
+    const hexMode = document.getElementById('hexMode');
+    
+    if (formulaMode) formulaMode.style.display = mode === 'formula' ? 'block' : 'none';
+    if (hexMode) hexMode.style.display = mode === 'hex' ? 'block' : 'none';
 };
 
 // ============================================================
-// TÍNH TOÁN CHUYỂN CELL - DEC
+// TÍNH TOÁN CHUYỂN CELL - DEC (KHÔNG DẤU NGĂN CÁCH)
 // ============================================================
 window.calculate = function() {
     const input = document.getElementById('inputX');
+    if (!input) return;
+    
     const X = input.value.trim();
     
     if (X.length < 6) {
@@ -243,25 +269,41 @@ window.calculate = function() {
     const b4 = Number(X.slice(0, -5));
     const kq4 = b4 * 1048576 + a4;
 
-    document.getElementById('result1').textContent = kq1.toLocaleString();
-    document.getElementById('result2').textContent = kq2.toLocaleString();
-    document.getElementById('result3').textContent = kq3.toLocaleString();
-    document.getElementById('result4').textContent = kq4.toLocaleString();
+    // HIỂN THỊ KHÔNG CÓ DẤU NGĂN CÁCH
+    const r1 = document.getElementById('result1');
+    const r2 = document.getElementById('result2');
+    const r3 = document.getElementById('result3');
+    const r4 = document.getElementById('result4');
+    
+    if (r1) r1.textContent = kq1.toString();
+    if (r2) r2.textContent = kq2.toString();
+    if (r3) r3.textContent = kq3.toString();
+    if (r4) r4.textContent = kq4.toString();
 
-    document.getElementById('resultContainer').style.display = 'block';
-};
-
-window.clearResult = function() {
-    document.getElementById('inputX').value = '';
-    document.getElementById('resultContainer').style.display = 'none';
-    document.getElementById('inputX').focus();
+    const container = document.getElementById('resultContainer');
+    if (container) container.style.display = 'block';
 };
 
 // ============================================================
-// HEX → DEC
+// XÓA KẾT QUẢ FORMULA
+// ============================================================
+window.clearResult = function() {
+    const input = document.getElementById('inputX');
+    if (input) input.value = '';
+    
+    const container = document.getElementById('resultContainer');
+    if (container) container.style.display = 'none';
+    
+    if (input) input.focus();
+};
+
+// ============================================================
+// HEX → DEC (KHÔNG DẤU NGĂN CÁCH)
 // ============================================================
 window.convertHexToDec = function() {
     const input = document.getElementById('inputHex');
+    if (!input) return;
+    
     const hexStr = input.value.trim().toUpperCase();
 
     if (!hexStr) {
@@ -279,71 +321,90 @@ window.convertHexToDec = function() {
     const decValue = parseInt(hexStr, 16);
     const binValue = decValue.toString(2);
 
-    document.getElementById('hexInputDisplay').textContent = hexStr;
-    document.getElementById('decResult').textContent = decValue.toLocaleString();
-    document.getElementById('binResult').textContent = binValue;
+    const hexDisplay = document.getElementById('hexInputDisplay');
+    const decDisplay = document.getElementById('decResult');
+    const binDisplay = document.getElementById('binResult');
+    const detailInfo = document.getElementById('hexDetailInfo');
+    const container = document.getElementById('hexResultContainer');
 
-    document.getElementById('hexDetailInfo').innerHTML = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
-            <div><strong>🔢 Hex:</strong> ${hexStr}</div>
-            <div><strong>📊 Dec:</strong> ${decValue.toLocaleString()}</div>
-            <div><strong>📘 Bin:</strong> ${binValue}</div>
-            <div><strong>🔢 Số chữ số:</strong> ${hexStr.length} ký tự Hex</div>
-        </div>
-    `;
+    if (hexDisplay) hexDisplay.textContent = hexStr;
+    if (decDisplay) decDisplay.textContent = decValue.toString(); // KHÔNG DẤU NGĂN CÁCH
+    if (binDisplay) binDisplay.textContent = binValue;
 
-    document.getElementById('hexResultContainer').style.display = 'block';
+    if (detailInfo) {
+        detailInfo.innerHTML = `
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
+                <div><strong>🔢 Hex:</strong> ${hexStr}</div>
+                <div><strong>📊 Dec:</strong> ${decValue.toString()}</div>
+                <div><strong>📘 Bin:</strong> ${binValue}</div>
+                <div><strong>🔢 Số chữ số:</strong> ${hexStr.length} ký tự Hex</div>
+            </div>
+        `;
+    }
+
+    if (container) container.style.display = 'block';
 };
 
+// ============================================================
+// XÓA KẾT QUẢ HEX
+// ============================================================
 window.clearHexResult = function() {
-    document.getElementById('inputHex').value = '';
-    document.getElementById('hexResultContainer').style.display = 'none';
-    document.getElementById('inputHex').focus();
+    const input = document.getElementById('inputHex');
+    if (input) input.value = '';
+    
+    const container = document.getElementById('hexResultContainer');
+    if (container) container.style.display = 'none';
+    
+    if (input) input.focus();
 };
 
 // ============================================================
 // HIỆU ỨNG TYPING EFFECT
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Typing effect cho welcome
     const fullText = `👋 Chào mừng bạn đến với Cẩm nang toàn năng – Nơi hội tụ công cụ, AI và tri thức. ✨ Chúc bạn một ngày sáng tạo và hiệu quả!`;
     const welcomeElement = document.getElementById('welcomeText');
-    let charIndex = 0;
+    
+    if (welcomeElement) {
+        let charIndex = 0;
 
-    function typeText() {
-        if (charIndex < fullText.length) {
-            const cursor = welcomeElement.querySelector('.typing-cursor');
-            if (cursor) cursor.remove();
-            
-            let displayChar = fullText[charIndex];
-            
-            if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
-                displayChar = `<span class="highlight-welcome">${displayChar}`;
-                if (charIndex + 1 < fullText.length && 
-                    fullText.substring(charIndex + 1).startsWith(' –')) {
-                    displayChar += '</span>';
+        function typeText() {
+            if (charIndex < fullText.length) {
+                const cursor = welcomeElement.querySelector('.typing-cursor');
+                if (cursor) cursor.remove();
+                
+                let displayChar = fullText[charIndex];
+                
+                if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
+                    displayChar = `<span class="highlight-welcome">${displayChar}`;
+                    if (charIndex + 1 < fullText.length && 
+                        fullText.substring(charIndex + 1).startsWith(' –')) {
+                        displayChar += '</span>';
+                    }
                 }
+                
+                welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + 
+                                          '<span class="typing-cursor"></span>';
+                
+                charIndex++;
+                setTimeout(typeText, 30 + Math.random() * 40);
+            } else {
+                const cursor = welcomeElement.querySelector('.typing-cursor');
+                if (cursor) cursor.remove();
+                
+                welcomeElement.innerHTML = fullText;
+                welcomeElement.innerHTML += '<span class="typing-cursor"></span>';
+                
+                setTimeout(() => {
+                    const finalCursor = welcomeElement.querySelector('.typing-cursor');
+                    if (finalCursor) finalCursor.remove();
+                }, 3000);
             }
-            
-            welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + 
-                                      '<span class="typing-cursor"></span>';
-            
-            charIndex++;
-            setTimeout(typeText, 30 + Math.random() * 40);
-        } else {
-            const cursor = welcomeElement.querySelector('.typing-cursor');
-            if (cursor) cursor.remove();
-            
-            welcomeElement.innerHTML = fullText;
-            welcomeElement.innerHTML += '<span class="typing-cursor"></span>';
-            
-            setTimeout(() => {
-                const finalCursor = welcomeElement.querySelector('.typing-cursor');
-                if (finalCursor) finalCursor.remove();
-            }, 3000);
         }
-    }
 
-    setTimeout(typeText, 500);
+        setTimeout(typeText, 500);
+    }
 
     // ===== KHỞI TẠO TABS =====
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -351,21 +412,6 @@ document.addEventListener('DOMContentLoaded', function() {
             renderTab(this.dataset.tab);
         });
     });
-
-    // ===== ENTER CHO CALCULATOR =====
-    const inputX = document.getElementById('inputX');
-    if (inputX) {
-        inputX.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') calculate();
-        });
-    }
-
-    const inputHex = document.getElementById('inputHex');
-    if (inputHex) {
-        inputHex.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') convertHexToDec();
-        });
-    }
 
     // ===== HIỂN THỊ TAB ĐẦU TIÊN =====
     renderTab('tool');
