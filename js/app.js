@@ -353,14 +353,13 @@ window.buildRoute = function() {
         return;
     }
 
-    // Lấy điểm đầu và điểm cuối
-    const from = `${points[0].lat},${points[0].lng}`;
-    const to = `${points[points.length - 1].lat},${points[points.length - 1].lng}`;
-
-    // Tạo URL đến OsmAPP
-    // OsmAPP hiện chưa hỗ trợ waypoints (điểm trung gian) qua URL,
-    // nhưng vẫn tạo được lộ trình với điểm đi và điểm đến
-    const url = `https://osmapp.org/directions?from=${from}&to=${to}&route=car`;
+    // Tạo danh sách các điểm cách nhau bằng dấu gạch ngang
+    // Định dạng: lat,lng~lat,lng~lat,lng
+    const routePoints = points.map(p => `${p.lat},${p.lng}`).join('~');
+    
+    // Tạo URL đến OsmAPP theo đúng định dạng
+    // Sử dụng tham số "route" với danh sách điểm cách nhau bằng ~
+    const url = `https://osmapp.org/directions?route=${routePoints}&type=car`;
 
     // Mở tab mới
     window.open(url, '_blank');
