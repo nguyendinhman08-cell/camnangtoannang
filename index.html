@@ -17,62 +17,31 @@
                 <span class="badge">MẫnKaka</span>
             </div>
             <p class="subtitle">📌 Tổng hợp công cụ · AI · Website hữu ích</p>
+
+            <!-- ===== WELCOME SECTION ===== -->
+            <div class="welcome-section">
+                <div class="welcome-text" id="welcomeText">
+                    <span class="typing-cursor"></span>
+                </div>
+            </div>
         </div>
     </header>
 
+    <!-- ===== TABS ===== -->
+    <nav class="tabs-nav">
+        <div class="container">
+            <button class="tab-btn active" data-tab="tool">🛠️ Công cụ</button>
+            <button class="tab-btn" data-tab="ai">🤖 AI Phổ thông</button>
+            <button class="tab-btn" data-tab="ai-utility">🛠️ AI Tiện ích</button>
+            <button class="tab-btn" data-tab="search">📡 Tra cứu</button>
+            <button class="tab-btn" data-tab="utility">⚡ Tiện ích</button>
+            <button class="tab-btn" data-tab="calculator">🧮 Tính toán</button>
+        </div>
+    </nav>
+
     <!-- ===== MAIN CONTENT ===== -->
     <main class="container">
-
-        <!-- ===== DANH MỤC: CÔNG CỤ AI ===== -->
-        <section class="category">
-            <div class="category-header">
-                <span class="cat-icon">🤖</span>
-                <h2>Trợ lý AI</h2>
-                <span class="count">4</span>
-            </div>
-            <div class="card-grid" id="aiGrid"></div>
-        </section>
-
-        <!-- ===== DANH MỤC: CÔNG CỤ LẬP TRÌNH ===== -->
-        <section class="category">
-            <div class="category-header">
-                <span class="cat-icon">💻</span>
-                <h2>Công cụ lập trình</h2>
-                <span class="count">4</span>
-            </div>
-            <div class="card-grid" id="devGrid"></div>
-        </section>
-
-        <!-- ===== DANH MỤC: HỌC TẬP & TRA CỨU ===== -->
-        <section class="category">
-            <div class="category-header">
-                <span class="cat-icon">📚</span>
-                <h2>Học tập & Tra cứu</h2>
-                <span class="count">4</span>
-            </div>
-            <div class="card-grid" id="learnGrid"></div>
-        </section>
-
-        <!-- ===== DANH MỤC: CÔNG CỤ VĂN PHÒNG ===== -->
-        <section class="category">
-            <div class="category-header">
-                <span class="cat-icon">📝</span>
-                <h2>Công cụ văn phòng</h2>
-                <span class="count">4</span>
-            </div>
-            <div class="card-grid" id="officeGrid"></div>
-        </section>
-
-        <!-- ===== DANH MỤC: GIẢI TRÍ ===== -->
-        <section class="category">
-            <div class="category-header">
-                <span class="cat-icon">🎵</span>
-                <h2>Giải trí & Đọc báo</h2>
-                <span class="count">4</span>
-            </div>
-            <div class="card-grid" id="funGrid"></div>
-        </section>
-
+        <div id="tabContent"></div>
     </main>
 
     <!-- ===== FOOTER ===== -->

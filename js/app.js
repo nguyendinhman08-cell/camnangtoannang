@@ -1,86 +1,394 @@
 // ============================================================
-// CẨM NANG TOÀN NĂNG - DỮ LIỆU LINKS
+// CẨM NANG TOÀN NĂNG - APP.JS
 // ============================================================
 
-const categories = [
-    {
-        id: 'aiGrid',
+// ============================================================
+// DỮ LIỆU CÁC DANH MỤC
+// ============================================================
+const categories = {
+    // ===== CÔNG CỤ =====
+    tool: {
+        icon: '🛠️',
+        name: 'Công cụ',
+        items: [
+            { icon: '📄', title: 'iLovePDF', desc: 'Chuyển đổi, chỉnh sửa PDF online', url: 'https://www.ilovepdf.com/', tag: 'PDF' },
+            { icon: '🖼️', title: 'PNGTree', desc: 'Kho icon, vector, ảnh nền', url: 'https://vi.pngtree.com/', tag: 'Design' },
+            { icon: '🔄', title: 'Convertio', desc: 'Chuyển đổi file đa định dạng', url: 'https://convertio.co/vn/', tag: 'Converter' }
+        ]
+    },
+
+    // ===== AI PHỔ THÔNG =====
+    ai: {
         icon: '🤖',
-        name: 'Trợ lý AI',
+        name: 'AI Phổ thông',
         items: [
-            { icon: '🧠', title: 'ChatGPT', desc: 'Trợ lý AI của OpenAI', url: 'https://chatgpt.com', tag: 'Phổ biến' },
-            { icon: '✨', title: 'Claude', desc: 'Trợ lý AI của Anthropic', url: 'https://claude.ai', tag: 'Code tốt' },
-            { icon: '🌐', title: 'DeepSeek', desc: 'AI miễn phí, đa ngôn ngữ', url: 'https://deepseek.com', tag: 'Miễn phí' },
-            { icon: '🎨', title: 'Midjourney', desc: 'Tạo ảnh bằng AI', url: 'https://midjourney.com', tag: 'Sáng tạo' }
+            { icon: '🧠', title: 'ChatGPT', desc: 'Trợ lý AI đa năng của OpenAI', url: 'https://chatgpt.com/', tag: 'Phổ biến' },
+            { icon: '✨', title: 'Gemini', desc: 'Trợ lý AI của Google', url: 'https://gemini.google.com/app', tag: 'Google' },
+            { icon: '📓', title: 'NotebookLM', desc: 'Công cụ nghiên cứu & ghi chú AI', url: 'https://notebook.google.com/', tag: 'Nghiên cứu' }
         ]
     },
-    {
-        id: 'devGrid',
-        icon: '💻',
-        name: 'Công cụ lập trình',
+
+    // ===== AI TIỆN ÍCH =====
+    'ai-utility': {
+        icon: '🛠️',
+        name: 'AI Tiện ích',
         items: [
-            { icon: '📘', title: 'GitHub', desc: 'Lưu trữ code, quản lý phiên bản', url: 'https://github.com', tag: 'Must-have' },
-            { icon: '📄', title: 'Stack Overflow', desc: 'Hỏi đáp lập trình', url: 'https://stackoverflow.com', tag: 'Cộng đồng' },
-            { icon: '📖', title: 'MDN Web Docs', desc: 'Tài liệu Web chuẩn', url: 'https://developer.mozilla.org', tag: 'Tài liệu' },
-            { icon: '🧪', title: 'CodePen', desc: 'Code HTML/CSS/JS online', url: 'https://codepen.io', tag: 'Thực hành' }
+            { icon: '🧘', title: 'Ông Lão Tử', desc: 'GPT tư vấn triết lý, lối sống', url: 'https://chatgpt.com/g/g-68d6b31640ec8191b945e7a0d7e876b0-ong-lao-tu', tag: 'Tư vấn' },
+            { icon: '📚', title: 'AI Học Trí Tuệ', desc: 'Hỗ trợ học tập, nghiên cứu', url: 'https://chatgpt.com/g/g-9yBS1MigT-ai-hoc-tri-tue', tag: 'Học tập' },
+            { icon: '🌍', title: 'Học Ngoại Ngữ', desc: 'Hỗ trợ tiếng Anh, Trung, Nhật, Hàn', url: 'https://chatgpt.com/g/g-67d79e355a948191a84e2d1b589d6a7d-hoc-ngoai-ngu-tieng-anh-trung-nhat-han', tag: 'Ngôn ngữ' },
+            { icon: '✍️', title: 'Trợ lý Viết Bài MXH', desc: 'Hỗ trợ viết bài mạng xã hội', url: 'https://chatgpt.com/g/g-67d65b01aab88191a708773c20ff4a1c-tro-ly-viet-bai-mang-xa-hoi-velo', tag: 'Content' }
         ]
     },
-    {
-        id: 'learnGrid',
-        icon: '📚',
-        name: 'Học tập & Tra cứu',
+
+    // ===== TRA CỨU =====
+    search: {
+        icon: '📡',
+        name: 'Tra cứu',
         items: [
-            { icon: '🎓', title: 'Google Scholar', desc: 'Tìm kiếm tài liệu học thuật', url: 'https://scholar.google.com', tag: 'Học thuật' },
-            { icon: '📝', title: 'Wikipedia', desc: 'Bách khoa toàn thư mở', url: 'https://wikipedia.org', tag: 'Tra cứu' },
-            { icon: '🇻🇳', title: 'Google Translate', desc: 'Dịch văn bản, phát âm chuẩn', url: 'https://translate.google.com', tag: 'Ngôn ngữ' },
-            { icon: '📊', title: 'Canva', desc: 'Thiết kế đồ họa online', url: 'https://canva.com', tag: 'Thiết kế' }
+            { icon: '📱', title: 'IMEI.info', desc: 'Tra cứu IMEI, bảo hành, blacklist', url: 'https://www.imei.info/', tag: 'IMEI' },
+            { icon: '🔍', title: 'IMEICheck', desc: 'Check IMEI miễn phí, hỗ trợ Tiếng Việt', url: 'https://imeicheck.com/vi/kiem-tra-imei', tag: 'IMEI' },
+            { icon: '🗺️', title: 'MultiCellID', desc: 'Hiển thị vị trí Cell ID trên bản đồ', url: 'https://www.multicellid.com/dangnhap.php', tag: 'Vị trí' },
+            { icon: '📍', title: 'FindCellID', desc: 'Tra cứu vị trí trạm BTS', url: 'https://findcellid.com/', tag: 'Vị trí' },
+            { icon: '📶', title: 'CellID.co', desc: 'Công cụ tra cứu Cell ID', url: 'https://cellid.co/cell', tag: 'Vị trí' }
         ]
     },
-    {
-        id: 'officeGrid',
-        icon: '📝',
-        name: 'Công cụ văn phòng',
+
+    // ===== TIỆN ÍCH =====
+    utility: {
+        icon: '⚡',
+        name: 'Tiện ích',
         items: [
-            { icon: '📧', title: 'Gmail', desc: 'Email của Google', url: 'https://mail.google.com', tag: 'Email' },
-            { icon: '📁', title: 'Google Drive', desc: 'Lưu trữ và chia sẻ file', url: 'https://drive.google.com', tag: 'Cloud' },
-            { icon: '📅', title: 'Google Calendar', desc: 'Quản lý lịch làm việc', url: 'https://calendar.google.com', tag: 'Lịch' },
-            { icon: '📝', title: 'Google Docs', desc: 'Soạn thảo văn bản online', url: 'https://docs.google.com', tag: 'Văn bản' }
+            { icon: '🎬', title: 'YouTube', desc: 'Xem video, học tập, giải trí', url: 'https://www.youtube.com', tag: 'Giải trí' },
+            { icon: '🌤️', title: 'Thời tiết NB', desc: 'Dự báo thời tiết Ninh Bình', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh', tag: 'Thời tiết' },
+            { icon: '🌙', title: 'Lịch âm', desc: 'Xem lịch âm dương, ngày tốt xấu', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m', tag: 'Lịch' }
         ]
     },
-    {
-        id: 'funGrid',
-        icon: '🎵',
-        name: 'Giải trí & Đọc báo',
-        items: [
-            { icon: '🎧', title: 'Spotify', desc: 'Nghe nhạc trực tuyến', url: 'https://spotify.com', tag: 'Âm nhạc' },
-            { icon: '🎬', title: 'YouTube', desc: 'Xem video, học tập, giải trí', url: 'https://youtube.com', tag: 'Video' },
-            { icon: '📰', title: 'VnExpress', desc: 'Tin tức Việt Nam hàng ngày', url: 'https://vnexpress.net', tag: 'Tin tức' },
-            { icon: '📖', title: 'Goodreads', desc: 'Cộng đồng đọc sách', url: 'https://goodreads.com', tag: 'Sách' }
-        ]
+
+    // ===== TÍNH TOÁN =====
+    calculator: {
+        icon: '🧮',
+        name: 'Tính toán',
+        isCalculator: true
     }
-];
+};
 
 // ============================================================
-// RENDER CARDS
+// RENDER TAB
 // ============================================================
+function renderTab(tabId) {
+    const container = document.getElementById('tabContent');
+    const category = categories[tabId];
+    
+    if (!category) return;
 
-function renderCategories() {
-    categories.forEach(cat => {
-        const container = document.getElementById(cat.id);
-        if (!container) return;
-
-        container.innerHTML = cat.items.map(item => `
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card">
-                <span class="card-icon">${item.icon}</span>
-                <span class="card-title">${item.title}</span>
-                <span class="card-desc">${item.desc}</span>
-                <span class="card-tag">${item.tag}</span>
-            </a>
-        `).join('');
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
+
+    if (category.isCalculator) {
+        container.innerHTML = renderCalculator();
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="tab-panel active">
+            <div class="category">
+                <div class="category-header">
+                    <span class="cat-icon">${category.icon}</span>
+                    <h2>${category.name}</h2>
+                    <span class="count">${category.items.length}</span>
+                </div>
+                <div class="card-grid">
+                    ${category.items.map(item => `
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card">
+                            <span class="card-icon">${item.icon}</span>
+                            <span class="card-title">${item.title}</span>
+                            <span class="card-desc">${item.desc}</span>
+                            <span class="card-tag">${item.tag}</span>
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // ============================================================
-// KHỞI CHẠY
+// RENDER CALCULATOR
 // ============================================================
-document.addEventListener('DOMContentLoaded', renderCategories);
+function renderCalculator() {
+    return `
+        <div class="tab-panel active">
+            <div class="calculator-container">
+                <div class="calculator-header">
+                    <span class="calc-icon">🧮</span>
+                    <h2>Công cụ tính toán</h2>
+                    <p class="calc-desc">Chọn chức năng và nhập dữ liệu</p>
+                </div>
+
+                <div class="calc-mode-selector">
+                    <button class="mode-btn active" data-mode="formula" onclick="switchMode('formula')">
+                        📐 Công thức VBA
+                    </button>
+                    <button class="mode-btn" data-mode="hex" onclick="switchMode('hex')">
+                        🔢 Hex → Dec
+                    </button>
+                </div>
+
+                <!-- FORMULA MODE -->
+                <div id="formulaMode" class="mode-panel active">
+                    <div class="calc-form">
+                        <div class="form-group">
+                            <label for="inputX">Nhập X (≥ 6 chữ số):</label>
+                            <input type="text" id="inputX" placeholder="VD: 1234567890" />
+                            <button class="btn btn-primary" onclick="calculate()">🧮 Tính</button>
+                            <button class="btn btn-secondary" onclick="clearResult()">🔄 Xóa</button>
+                        </div>
+                    </div>
+                    <div id="resultContainer" style="display: none;">
+                        <div class="result-grid">
+                            <div class="result-card">
+                                <div class="result-label">📊 KQ1</div>
+                                <div class="result-value" id="result1">0</div>
+                                <div class="result-formula">b × 65536 + a</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">📊 KQ2</div>
+                                <div class="result-value" id="result2">0</div>
+                                <div class="result-formula">b × 1048576 + a</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">📊 KQ3</div>
+                                <div class="result-value" id="result3">0</div>
+                                <div class="result-formula">b × 65536 + a</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">📊 KQ4</div>
+                                <div class="result-value" id="result4">0</div>
+                                <div class="result-formula">b × 1048576 + a</div>
+                            </div>
+                        </div>
+                        <div class="calc-detail" id="detailInfo"></div>
+                    </div>
+                </div>
+
+                <!-- HEX MODE -->
+                <div id="hexMode" class="mode-panel" style="display:none;">
+                    <div class="calc-form">
+                        <div class="form-group">
+                            <label for="inputHex">Nhập số thập lục phân (Hex):</label>
+                            <input type="text" id="inputHex" placeholder="VD: 1A, FF, ABCD" style="text-transform:uppercase;" />
+                            <button class="btn btn-primary" onclick="convertHexToDec()">🔄 Đổi sang Dec</button>
+                            <button class="btn btn-secondary" onclick="clearHexResult()">🔄 Xóa</button>
+                        </div>
+                    </div>
+                    <div id="hexResultContainer" style="display: none;">
+                        <div class="result-grid" style="grid-template-columns: 1fr 1fr;">
+                            <div class="result-card" style="grid-column: 1 / -1;">
+                                <div class="result-label">📥 Hex (đầu vào)</div>
+                                <div class="result-value" id="hexInputDisplay" style="font-size:20px; color:#3b82f6;">-</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">📊 Thập phân (Decimal)</div>
+                                <div class="result-value" id="decResult">0</div>
+                                <div class="result-formula">Kết quả chuyển đổi</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">📊 Nhị phân (Binary)</div>
+                                <div class="result-value" id="binResult" style="font-size:18px;">0</div>
+                                <div class="result-formula">Dạng nhị phân</div>
+                            </div>
+                        </div>
+                        <div class="calc-detail" id="hexDetailInfo"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ============================================================
+// SWITCH MODE
+// ============================================================
+window.switchMode = function(mode) {
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    document.getElementById('formulaMode').style.display = mode === 'formula' ? 'block' : 'none';
+    document.getElementById('hexMode').style.display = mode === 'hex' ? 'block' : 'none';
+};
+
+// ============================================================
+// TÍNH TOÁN FORMULA
+// ============================================================
+window.calculate = function() {
+    const input = document.getElementById('inputX');
+    const X = input.value.trim();
+    
+    if (X.length < 6) {
+        alert('⚠️ X phải có ít nhất 6 chữ số!');
+        input.focus();
+        return;
+    }
+
+    if (!/^\d+$/.test(X)) {
+        alert('⚠️ Vui lòng chỉ nhập số!');
+        input.focus();
+        return;
+    }
+
+    const a1 = Number(X.slice(-5));
+    const b1 = Number(X.slice(0, -5));
+    const kq1 = b1 * 65536 + a1;
+
+    const a2 = Number(X.slice(-4));
+    const b2 = Number(X.slice(0, -4));
+    const kq2 = b2 * 1048576 + a2;
+
+    const kq3 = kq1;
+
+    const a4 = Number(X.slice(-5));
+    const b4 = Number(X.slice(0, -5));
+    const kq4 = b4 * 1048576 + a4;
+
+    document.getElementById('result1').textContent = kq1.toLocaleString();
+    document.getElementById('result2').textContent = kq2.toLocaleString();
+    document.getElementById('result3').textContent = kq3.toLocaleString();
+    document.getElementById('result4').textContent = kq4.toLocaleString();
+
+    document.getElementById('detailInfo').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
+            <div><strong>📥 X =</strong> ${X}</div>
+            <div><strong>🔢 Độ dài =</strong> ${X.length} chữ số</div>
+            <div><strong>KQ1:</strong> ${b1} × 65536 + ${a1} = ${kq1.toLocaleString()}</div>
+            <div><strong>KQ2:</strong> ${b2} × 1048576 + ${a2} = ${kq2.toLocaleString()}</div>
+            <div><strong>KQ3:</strong> ${b1} × 65536 + ${a1} = ${kq3.toLocaleString()}</div>
+            <div><strong>KQ4:</strong> ${b4} × 1048576 + ${a4} = ${kq4.toLocaleString()}</div>
+        </div>
+    `;
+
+    document.getElementById('resultContainer').style.display = 'block';
+};
+
+window.clearResult = function() {
+    document.getElementById('inputX').value = '';
+    document.getElementById('resultContainer').style.display = 'none';
+    document.getElementById('inputX').focus();
+};
+
+// ============================================================
+// HEX → DEC
+// ============================================================
+window.convertHexToDec = function() {
+    const input = document.getElementById('inputHex');
+    const hexStr = input.value.trim().toUpperCase();
+
+    if (!hexStr) {
+        alert('⚠️ Vui lòng nhập số thập lục phân!');
+        input.focus();
+        return;
+    }
+
+    if (!/^[0-9A-F]+$/.test(hexStr)) {
+        alert('⚠️ Chỉ nhập ký tự hợp lệ: 0-9 và A-F!');
+        input.focus();
+        return;
+    }
+
+    const decValue = parseInt(hexStr, 16);
+    const binValue = decValue.toString(2);
+
+    document.getElementById('hexInputDisplay').textContent = hexStr;
+    document.getElementById('decResult').textContent = decValue.toLocaleString();
+    document.getElementById('binResult').textContent = binValue;
+
+    document.getElementById('hexDetailInfo').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; padding:16px; background:#f8fafc; border-radius:8px; font-size:14px;">
+            <div><strong>🔢 Hex:</strong> ${hexStr}</div>
+            <div><strong>📊 Dec:</strong> ${decValue.toLocaleString()}</div>
+            <div><strong>📘 Bin:</strong> ${binValue}</div>
+            <div><strong>🔢 Số chữ số:</strong> ${hexStr.length} ký tự Hex</div>
+        </div>
+    `;
+
+    document.getElementById('hexResultContainer').style.display = 'block';
+};
+
+window.clearHexResult = function() {
+    document.getElementById('inputHex').value = '';
+    document.getElementById('hexResultContainer').style.display = 'none';
+    document.getElementById('inputHex').focus();
+};
+
+// ============================================================
+// HIỆU ỨNG TYPING EFFECT
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Typing effect cho welcome
+    const fullText = `👋 Chào mừng bạn đến với Cẩm nang toàn năng – Nơi hội tụ công cụ, AI và tri thức. ✨ Chúc bạn một ngày sáng tạo và hiệu quả!`;
+    const welcomeElement = document.getElementById('welcomeText');
+    let charIndex = 0;
+
+    function typeText() {
+        if (charIndex < fullText.length) {
+            const cursor = welcomeElement.querySelector('.typing-cursor');
+            if (cursor) cursor.remove();
+            
+            let displayChar = fullText[charIndex];
+            
+            // Highlight từ "Cẩm nang toàn năng"
+            if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
+                displayChar = `<span class="highlight-welcome">${displayChar}`;
+                if (charIndex + 1 < fullText.length && 
+                    fullText.substring(charIndex + 1).startsWith(' –')) {
+                    displayChar += '</span>';
+                }
+            }
+            
+            welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + 
+                                      '<span class="typing-cursor"></span>';
+            
+            charIndex++;
+            setTimeout(typeText, 30 + Math.random() * 40);
+        } else {
+            const cursor = welcomeElement.querySelector('.typing-cursor');
+            if (cursor) cursor.remove();
+            
+            welcomeElement.innerHTML = fullText;
+            welcomeElement.innerHTML += '<span class="typing-cursor"></span>';
+            
+            setTimeout(() => {
+                const finalCursor = welcomeElement.querySelector('.typing-cursor');
+                if (finalCursor) finalCursor.remove();
+            }, 3000);
+        }
+    }
+
+    setTimeout(typeText, 500);
+
+    // ===== KHỞI TẠO TABS =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            renderTab(this.dataset.tab);
+        });
+    });
+
+    // ===== ENTER CHO CALCULATOR =====
+    const inputX = document.getElementById('inputX');
+    if (inputX) {
+        inputX.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculate();
+        });
+    }
+
+    const inputHex = document.getElementById('inputHex');
+    if (inputHex) {
+        inputHex.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') convertHexToDec();
+        });
+    }
+
+    // ===== HIỂN THỊ TAB ĐẦU TIÊN =====
+    renderTab('tool');
+});

@@ -28,7 +28,7 @@ body {
 .header {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #f1f5f9;
-    padding: 32px 0 24px;
+    padding: 24px 0 16px;
     border-bottom: 4px solid #3b82f6;
 }
 
@@ -61,16 +61,137 @@ body {
 }
 
 .subtitle {
-    margin-top: 6px;
+    margin-top: 4px;
     font-size: 15px;
     color: #94a3b8;
+}
+
+/* ============================================================
+   WELCOME SECTION
+   ============================================================ */
+.welcome-section {
+    margin-top: 12px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    border-left: 4px solid #3b82f6;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.welcome-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    font-weight: 400;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #3b82f6;
+    margin-left: 2px;
+    animation: blink 0.8s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #60a5fa);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientMove 3s ease-in-out infinite;
+    font-weight: 600;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.highlight-welcome {
+    color: #93c5fd;
+    font-weight: 500;
+}
+
+/* ============================================================
+   TABS NAVIGATION
+   ============================================================ */
+.tabs-nav {
+    background: white;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 8px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tabs-nav .container {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.tab-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.tab-btn.active {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+}
+
+/* ============================================================
+   TAB CONTENT
+   ============================================================ */
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
    CATEGORY
    ============================================================ */
 .category {
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .category-header {
@@ -161,6 +282,198 @@ body {
 }
 
 /* ============================================================
+   CALCULATOR
+   ============================================================ */
+.calculator-container {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.calculator-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.calc-icon {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.calculator-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.calc-desc {
+    color: #64748b;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* ===== MODE SELECTOR ===== */
+.calc-mode-selector {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    padding: 8px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.mode-btn:hover {
+    border-color: #94a3b8;
+    color: #0f172a;
+}
+
+.mode-btn.active {
+    border-color: #0f172a;
+    background: #0f172a;
+    color: white;
+}
+
+.mode-panel {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ===== CALC FORM ===== */
+.calc-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.calc-form .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.calc-form label {
+    font-weight: 600;
+    font-size: 15px;
+    color: #0f172a;
+}
+
+.calc-form input {
+    padding: 10px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 280px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    transition: border-color 0.3s;
+}
+
+.calc-form input:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+/* ===== RESULT ===== */
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.result-card {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+    border: 1px solid #e9edf2;
+    transition: all 0.2s;
+}
+
+.result-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.result-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.result-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+}
+
+.result-formula {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.calc-detail {
+    margin-top: 16px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: #0f172a;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 .footer {
@@ -179,7 +492,7 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVE (Tương thích điện thoại, tablet)
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 640px) {
     .logo h1 {
@@ -188,10 +501,32 @@ body {
     .card-grid {
         grid-template-columns: 1fr 1fr;
     }
+    .welcome-text {
+        font-size: 14px;
+    }
+    .welcome-section {
+        padding: 10px 14px;
+        min-height: 60px;
+    }
+    .calc-form input {
+        width: 100%;
+    }
+    .result-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .mode-btn {
+        flex: 1;
+        text-align: center;
+        font-size: 13px;
+        padding: 8px 12px;
+    }
 }
 
 @media (max-width: 480px) {
     .card-grid {
+        grid-template-columns: 1fr;
+    }
+    .result-grid {
         grid-template-columns: 1fr;
     }
 }
