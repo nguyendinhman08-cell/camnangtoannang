@@ -16,7 +16,7 @@ const categories = {
             { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://www.convertcsv.com/csv-to-json.htm' },
             { icon: 'fa-qrcode', title: 'GenQRCode', url: 'https://genqrcode.com/vn' }
         ]
-    }
+    },
     ai: {
         icon: 'fa-robot',
         name: 'AI Phổ thông',
@@ -98,7 +98,7 @@ function renderTab(tabId) {
 
     if (category.isSearchData) {
         container.innerHTML = renderSearchData();
-        setTimeout(loadData, 300);
+        // KHÔNG tự động load data - chỉ load khi user click nút
         return;
     }
 
@@ -441,7 +441,7 @@ window.buildKML = function() {
 };
 
 // ============================================================
-// SEARCH DATA - RENDER
+// SEARCH DATA - RENDER (CHỈ LOAD KHI CLICK NÚT)
 // ============================================================
 function renderSearchData() {
     return `
@@ -451,9 +451,12 @@ function renderSearchData() {
                     <span class="search-icon">📡</span>
                     <h2>Tra cứu Cell ID</h2>
                     <p class="search-desc">Nhập MNC, LAC, Cell để tìm kiếm (có thể để trống 1 hoặc nhiều điều kiện)</p>
-                    <p class="search-status" id="dataStatus" style="font-size:13px;color:#94a3b8;margin-top:4px;">
-                        <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
+                    <p class="search-status" id="dataStatus" style="font-size:13px;color:#94a3b8;margin-top:8px;">
+                        <i class="fas fa-info-circle"></i> Chưa tải dữ liệu. Nhấn nút bên dưới để tải.
                     </p>
+                    <button class="btn btn-primary" onclick="loadData()" id="loadBtn" style="margin-top:12px;">
+                        <i class="fas fa-download"></i> Tải dữ liệu
+                    </button>
                 </div>
 
                 <div class="search-filters">
@@ -495,8 +498,8 @@ function renderSearchData() {
                             <tbody id="tableBody">
                                 <tr>
                                     <td colspan="5" style="text-align:center;padding:40px;color:#94a3b8;">
-                                        <i class="fas fa-spinner fa-spin" style="font-size:30px;display:block;margin-bottom:10px;"></i>
-                                        Đang tải dữ liệu...
+                                        <i class="fas fa-info-circle" style="font-size:30px;display:block;margin-bottom:10px;"></i>
+                                        Nhấn nút "Tải dữ liệu" để bắt đầu
                                     </td>
                                 </tr>
                             </tbody>
@@ -517,16 +520,31 @@ let filteredData = [];
 let currentPage = 1;
 const pageSize = 50;
 let isDataLoaded = false;
+let isLoading = false;
 
 // ============================================================
-// LOAD DỮ LIỆU TỪ FILE JSON
+// LOAD DỮ LIỆU TỪ FILE JSON (CHỈ KHI CLICK NÚT)
 // ============================================================
 async function loadData() {
+    if (isDataLoaded || isLoading) return;
+    
+    isLoading = true;
     const statusEl = document.getElementById('dataStatus');
     const tbody = document.getElementById('tableBody');
+    const loadBtn = document.getElementById('loadBtn');
     
     try {
-        statusEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...';
+        statusEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu... (có thể mất 5-10 giây)';
+        if (loadBtn) loadBtn.disabled = true;
+        
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align:center;padding:40px;color:#94a3b8;">
+                    <i class="fas fa-spinner fa-spin" style="font-size:30px;display:block;margin-bottom:10px;"></i>
+                    Đang tải dữ liệu, vui lòng đợi...
+                </td>
+            </tr>
+        `;
         
         const response = await fetch('assets/data.json');
         if (!response.ok) {
@@ -536,8 +554,14 @@ async function loadData() {
         fullData = await response.json();
         filteredData = fullData;
         isDataLoaded = true;
+        isLoading = false;
         
         statusEl.innerHTML = `<i class="fas fa-check-circle" style="color:#22c55e;"></i> Đã tải ${fullData.length} dòng dữ liệu`;
+        if (loadBtn) {
+            loadBtn.innerHTML = '<i class="fas fa-check"></i> Đã tải xong';
+            loadBtn.disabled = true;
+        }
+        
         document.getElementById('totalCount').textContent = fullData.length;
         document.getElementById('filteredCount').textContent = filteredData.length;
         
@@ -545,7 +569,9 @@ async function loadData() {
         
     } catch (error) {
         console.error('Lỗi load dữ liệu:', error);
+        isLoading = false;
         statusEl.innerHTML = `<i class="fas fa-exclamation-circle" style="color:#ef4444;"></i> Lỗi: ${error.message}`;
+        if (loadBtn) loadBtn.disabled = false;
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" style="text-align:center;padding:40px;color:#ef4444;">
