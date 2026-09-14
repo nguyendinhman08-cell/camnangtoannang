@@ -13,7 +13,7 @@ const categories = {
             { icon: 'fa-file-pdf', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
             { icon: 'fa-image', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
             { icon: 'fa-arrows-rotate', title: 'Convertio', url: 'https://convertio.co/vn/' },
-            { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://www.https://csvjson.com/' },
+            { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://csvjson.com/' },
             { icon: 'fa-qrcode', title: 'GenQRCode', url: 'https://genqrcode.com/vn' }
         ]
     },
@@ -98,7 +98,6 @@ function renderTab(tabId) {
 
     if (category.isSearchData) {
         container.innerHTML = renderSearchData();
-        // KHÔNG tự động load data - chỉ load khi user click nút
         return;
     }
 
@@ -441,7 +440,7 @@ window.buildKML = function() {
 };
 
 // ============================================================
-// SEARCH DATA - RENDER (CHỈ LOAD KHI CLICK NÚT)
+// SEARCH DATA - RENDER
 // ============================================================
 function renderSearchData() {
     return `
@@ -513,6 +512,17 @@ function renderSearchData() {
 }
 
 // ============================================================
+// HÀM LÀM SẠCH TỌA ĐỘ (LOẠI BỎ KÝ TỰ LỖI BOM)
+// ============================================================
+function cleanToaDo(toado) {
+    if (!toado) return '';
+    return String(toado)
+        .replace(/\uFEFF/g, '')       // Loại bỏ BOM
+        .replace(/[^\d.,\-\s]/g, '')  // Chỉ giữ số, dấu chấm, dấu phẩy, dấu trừ, khoảng trắng
+        .trim();
+}
+
+// ============================================================
 // BIẾN TOÀN CỤC CHO SEARCH DATA
 // ============================================================
 let fullData = [];
@@ -523,7 +533,7 @@ let isDataLoaded = false;
 let isLoading = false;
 
 // ============================================================
-// LOAD DỮ LIỆU TỪ FILE JSON (CHỈ KHI CLICK NÚT)
+// LOAD DỮ LIỆU TỪ FILE JSON
 // ============================================================
 async function loadData() {
     if (isDataLoaded || isLoading) return;
@@ -627,21 +637,32 @@ window.clearFilters = function() {
 };
 
 // ============================================================
-// HÀM MỞ GOOGLE MAPS
+// HÀM MỞ GOOGLE MAPS (ĐÃ SỬA - LÀM SẠCH TỌA ĐỘ)
 // ============================================================
 window.openGoogleMaps = function(toado) {
     if (!toado) return;
-    const parts = toado.split(',');
+    
+    const cleaned = cleanToaDo(toado);
+    const parts = cleaned.split(',');
+    
     if (parts.length === 2) {
         const lat = parts[0].trim();
         const lng = parts[1].trim();
+        
+        if (isNaN(parseFloat(lat)) || isNaN(parseFloat(lng))) {
+            alert('⚠️ Tọa độ không hợp lệ: ' + toado);
+            return;
+        }
+        
         const url = `https://www.google.com/maps?q=${lat},${lng}`;
         window.open(url, '_blank');
+    } else {
+        alert('⚠️ Tọa độ không đúng định dạng: ' + toado);
     }
 };
 
 // ============================================================
-// HÀM RENDER BẢNG
+// HÀM RENDER BẢNG (ĐÃ SỬA - LÀM SẠCH TỌA ĐỘ)
 // ============================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
@@ -659,22 +680,26 @@ function renderTable() {
             </tr>
         `;
     } else {
-        tbody.innerHTML = pageData.map((row, index) => `
-            <tr>
-                <td>${start + index + 1}</td>
-                <td><strong>${row.MNC}</strong></td>
-                <td>${row.LAC}</td>
-                <td style="font-family: 'Courier New', monospace;">${row.CELL}</td>
-                <td>
-                    <a href="#" onclick="openGoogleMaps('${row.TOADO}'); return false;" 
-                       style="color:#3b82f6; text-decoration:none; font-family: 'Courier New', monospace; cursor:pointer;"
-                       title="Click để mở Google Maps">
-                        <i class="fas fa-map-marker-alt" style="color:#ef4444;"></i>
-                        ${row.TOADO}
-                    </a>
-                </td>
-            </tr>
-        `).join('');
+        tbody.innerHTML = pageData.map((row, index) => {
+            const toadoClean = cleanToaDo(row.TOADO);
+            
+            return `
+                <tr>
+                    <td>${start + index + 1}</td>
+                    <td><strong>${row.MNC}</strong></td>
+                    <td>${row.LAC}</td>
+                    <td style="font-family: 'Courier New', monospace;">${row.CELL}</td>
+                    <td>
+                        <a href="#" onclick="openGoogleMaps('${toadoClean}'); return false;" 
+                           style="color:#3b82f6; text-decoration:none; font-family: 'Courier New', monospace; cursor:pointer;"
+                           title="Click để mở Google Maps">
+                            <i class="fas fa-map-marker-alt" style="color:#ef4444;"></i>
+                            ${toadoClean}
+                        </a>
+                    </td>
+                </tr>
+            `;
+        }).join('');
     }
     
     renderPagination();
