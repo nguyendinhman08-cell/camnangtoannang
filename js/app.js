@@ -13,9 +13,10 @@ const categories = {
             { icon: 'fa-file-pdf', title: 'iLovePDF', url: 'https://www.ilovepdf.com/' },
             { icon: 'fa-image', title: 'PNGTree', url: 'https://vi.pngtree.com/' },
             { icon: 'fa-arrows-rotate', title: 'Convertio', url: 'https://convertio.co/vn/' },
-            { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://www.convertcsv.com/csv-to-json.htm' }
+            { icon: 'fa-file-csv', title: 'CSV to JSON', url: 'https://www.convertcsv.com/csv-to-json.htm' },
+            { icon: 'fa-qrcode', title: 'GenQRCode', url: 'https://genqrcode.com/vn' }
         ]
-    },
+    }
     ai: {
         icon: 'fa-robot',
         name: 'AI Phổ thông',
