@@ -44,7 +44,7 @@ const categories = {
             { icon: 'fa-magnifying-glass', title: 'IMEICheck', url: 'https://imeicheck.com/vi/kiem-tra-imei' },
             { icon: 'fa-map-location-dot', title: 'MultiCellID', url: 'https://www.multicellid.com/dangnhap.php' },
             { icon: 'fa-location-dot', title: 'FindCellID', url: 'https://findcellid.com/' },
-            { icon: 'fa-signal', title: 'CellID.co', url: 'https://cellid.co/cell' }
+            { icon: 'fa-signal', title: 'CellID.co', url: 'https://cellid.co/' }
         ]
     },
     utility: {
@@ -53,7 +53,8 @@ const categories = {
         items: [
             { icon: 'fa-video', title: 'YouTube', url: 'https://www.youtube.com' },
             { icon: 'fa-cloud-sun', title: 'Thời tiết NB', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh' },
-            { icon: 'fa-moon', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' }
+            { icon: 'fa-moon', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' },
+            { icon: 'fa-window-maximize', title: 'Phần mềm by Mankaka', url: 'https://drive.google.com/drive/folders/1ldSqxHDjYDFzM9SWmPzx7cyr2_grS071?usp=drive_link' }
         ]
     },
     calculator: {
@@ -772,36 +773,4 @@ document.addEventListener('DOMContentLoaded', function() {
         let charIndex = 0;
         function typeText() {
             if (charIndex < fullText.length) {
-                const cursor = welcomeElement.querySelector('.typing-cursor');
-                if (cursor) cursor.remove();
-                let displayChar = fullText[charIndex];
-                if (fullText.substring(charIndex).startsWith('Cẩm nang toàn năng')) {
-                    displayChar = `<span class="highlight-welcome">${displayChar}`;
-                    if (charIndex + 1 < fullText.length && fullText.substring(charIndex + 1).startsWith(' –')) {
-                        displayChar += '</span>';
-                    }
-                }
-                welcomeElement.innerHTML = fullText.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-                charIndex++;
-                setTimeout(typeText, 30 + Math.random() * 40);
-            } else {
-                const cursor = welcomeElement.querySelector('.typing-cursor');
-                if (cursor) cursor.remove();
-                welcomeElement.innerHTML = fullText;
-                welcomeElement.innerHTML += '<span class="typing-cursor"></span>';
-                setTimeout(() => {
-                    const finalCursor = welcomeElement.querySelector('.typing-cursor');
-                    if (finalCursor) finalCursor.remove();
-                }, 3000);
-            }
-        }
-        setTimeout(typeText, 500);
-    }
-
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            renderTab(this.dataset.tab);
-        });
-    });
-    renderTab('tool');
-});
+                const cursor = welcomeElement.querySelector('.
