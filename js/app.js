@@ -44,7 +44,7 @@ const categories = {
             { icon: 'fa-magnifying-glass', title: 'IMEICheck', url: 'https://imeicheck.com/vi/kiem-tra-imei' },
             { icon: 'fa-map-location-dot', title: 'MultiCellID', url: 'https://www.multicellid.com/dangnhap.php' },
             { icon: 'fa-location-dot', title: 'FindCellID', url: 'https://findcellid.com/' },
-            { icon: 'fa-signal', title: 'CellID.co', url: 'https://cellid.co/cell' }
+            { icon: 'fa-signal', title: 'CellID.co', url: 'https://cellid.co/' }
         ]
     },
     utility: {
@@ -54,7 +54,7 @@ const categories = {
             { icon: 'fa-video', title: 'YouTube', url: 'https://www.youtube.com' },
             { icon: 'fa-cloud-sun', title: 'Thời tiết NB', url: 'https://coccoc.com/search?query=th%E1%BB%9Di+ti%E1%BA%BFt+ninh+binh' },
             { icon: 'fa-moon', title: 'Lịch âm', url: 'https://coccoc.com/search?query=l%E1%BB%8Bch+%C3%A2m' },
-            { icon: 'fa-window-maximize', title: 'Phần mềm Maaxnkaka', url: 'https://drive.google.com/drive/folders/1ldSqxHDjYDFzM9SWmPzx7cyr2_grS071?usp=drive_link' }
+            { icon: 'fa-window-maximize', title: 'Phần mềm Mankaka', url: 'https://drive.google.com/drive/folders/1ldSqxHDjYDFzM9SWmPzx7cyr2_grS071?usp=drive_link' }
         ]
     },
     calculator: {
